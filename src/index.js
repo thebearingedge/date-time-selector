@@ -74,8 +74,8 @@ export default class DateTimeSelector extends React.Component {
 
   generateDays = (page, selected) => {
     const startOfMonth = moment(page).startOf('month')
-    const startFillCount = startOfMonth.day() - 1
-    startOfMonth.subtract(startFillCount > 0 ? startFillCount : 0, 'days')
+    const startFillCount = startOfMonth.day()
+    startOfMonth.subtract(startFillCount !== 0 ? startFillCount - 1 : 6, 'days')
 
     const result = this.gen(startOfMonth, 42, 7, 'days', selected, 'dWWYY')
 

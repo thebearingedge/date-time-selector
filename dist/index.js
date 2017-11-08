@@ -80,8 +80,8 @@ var DateTimeSelector = function (_React$Component) {
       return result;
     }, _this.generateDays = function (page, selected) {
       var startOfMonth = (0, _moment2.default)(page).startOf('month');
-      var startFillCount = startOfMonth.day() - 1;
-      startOfMonth.subtract(startFillCount > 0 ? startFillCount : 0, 'days');
+      var startFillCount = startOfMonth.day();
+      startOfMonth.subtract(startFillCount !== 0 ? startFillCount - 1 : 6, 'days');
 
       var result = _this.gen(startOfMonth, 42, 7, 'days', selected, 'dWWYY');
 
