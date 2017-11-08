@@ -30,26 +30,27 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Picker = function (_React$Component) {
-  _inherits(Picker, _React$Component);
+var DateTimeSelector = function (_React$Component) {
+  _inherits(DateTimeSelector, _React$Component);
 
-  function Picker() {
+  function DateTimeSelector() {
     var _ref;
 
     var _temp, _this, _ret;
 
-    _classCallCheck(this, Picker);
+    _classCallCheck(this, DateTimeSelector);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Picker.__proto__ || Object.getPrototypeOf(Picker)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DateTimeSelector.__proto__ || Object.getPrototypeOf(DateTimeSelector)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       days: [],
       months: [],
       years: [],
       page: (0, _moment2.default)(),
       selected: null,
+      submitted: null,
       view: 'D',
       visible: false
     }, _this.updatePage = function (newPage, selected, view) {
@@ -119,9 +120,9 @@ var Picker = function (_React$Component) {
     }, _this.handleClickClear = function () {
       _this.updatePage((0, _moment2.default)(), null, _this.state.view);
     }, _this.handleSubmit = function () {
-      _this.setState({ visible: false }, function () {
+      _this.setState({ visible: false, submitted: _this.state.selected }, function () {
         if (_this.props.onSelected) {
-          _this.props.onSelected(_this.state.selected);
+          _this.props.onSelected(_this.state.submitted);
         }
       });
     }, _this.moveOn = function (goForward) {
@@ -155,7 +156,7 @@ var Picker = function (_React$Component) {
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
-  _createClass(Picker, [{
+  _createClass(DateTimeSelector, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
       var _this2 = this;
@@ -176,6 +177,7 @@ var Picker = function (_React$Component) {
       var _this3 = this;
 
       var _state = this.state,
+          submitted = _state.submitted,
           visible = _state.visible,
           dow = _state.dow,
           view = _state.view,
@@ -192,6 +194,8 @@ var Picker = function (_React$Component) {
 
       var timeDisable = !selected;
       var formattedDate = selected ? selected.format(format) : '';
+      var formattedSubmittedDate = submitted ? submitted.format(format) : '';
+
       var formattedTime = {
         hour: selected ? selected.hour() : 0,
         minute: selected ? selected.minute() : 0,
@@ -203,7 +207,7 @@ var Picker = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'input-group' },
-        _react2.default.createElement('input', _extends({ type: 'text', className: 'form-control', value: formattedDate, placeholder: 'Pick a date...' }, inputProps)),
+        _react2.default.createElement('input', _extends({ type: 'text', className: 'form-control', value: formattedSubmittedDate, placeholder: 'Pick a date...' }, inputProps)),
         _react2.default.createElement(
           'span',
           { className: 'input-group-addon', onClick: this.handleToggleVisibility },
@@ -275,7 +279,7 @@ var Picker = function (_React$Component) {
               null,
               _react2.default.createElement(
                 'button',
-                { disabled: timeDisable, onClick: this.handleClickClear, type: 'button', className: '', btn: true, 'btn-light': true },
+                { onClick: this.handleClickClear, type: 'button', className: 'btn btn-light', disabled: timeDisable },
                 _react2.default.createElement('i', { className: 'fa fa-trash-o text-primary' })
               ),
               _react2.default.createElement(
@@ -295,22 +299,22 @@ var Picker = function (_React$Component) {
     }
   }]);
 
-  return Picker;
+  return DateTimeSelector;
 }(_react2.default.Component);
 
-Picker.propTypes = {
+DateTimeSelector.propTypes = {
   default: _propTypes2.default.object,
   format: _propTypes2.default.string,
   disableTime: _propTypes2.default.boolen,
   onSelected: _propTypes2.default.func
 };
-Picker.defaultProps = {
+DateTimeSelector.defaultProps = {
   default: null,
   disableTime: false,
   format: 'L LTS',
   onSelected: null
 };
-exports.default = Picker;
+exports.default = DateTimeSelector;
 
 
 var HeadButton = function HeadButton(_ref2) {
