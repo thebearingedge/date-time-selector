@@ -12,6 +12,10 @@ All internal date manipulation is achieved using [Moment.js](https://momentjs.co
 
 The component renders an [input-group](https://getbootstrap.com/docs/4.0/components/input-group/)
 
+## Demo
+
+https://codesandbox.io/s/881mmkvlwl
+
 ## Getting Started
 ### Install
 
