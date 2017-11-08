@@ -236,7 +236,7 @@ export default class DateTimeSelector extends React.Component {
             <ButtonGroup>
               <button onClick={this.handleClickClear} type='button' className='btn btn-sm btn-light' disabled={timeDisable}><i className='fa fa-trash-o text-primary' /></button>
               <button onClick={this.handleClickNow} type='button' className='btn btn-sm btn-light'><i className='fa fa-circle text-primary' /></button>
-              <button onClick={this.handleSubmit} type='button' className='btn btn-sm btn-light'><i className='fa fa-check text-success' /></button>
+              <button onClick={this.handleSubmit} type='button' className='btn btn-sm btn-light' disabled={selected}><i className='fa fa-check text-success' /></button>
             </ButtonGroup>
           </div>
         </div>
