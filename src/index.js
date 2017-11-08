@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
-export default class Picker extends React.Component {
+export default class DateTimeSelector extends React.Component {
 
   state = {
     days: [],
