@@ -201,10 +201,16 @@ export default class DateTimeSelector extends React.Component {
 
     return (
       <div className='input-group'>
-        <input type='text' className='form-control' value={formattedSubmittedDate} placeholder='Pick a date...' {...inputProps} />
-        <span className='input-group-addon' onClick={this.handleToggleVisibility}><i className='fa fa-calendar' /></span>
+        <div className='input-group'>
+          <input type='text' className='form-control' value={formattedSubmittedDate} placeholder='Pick a date...' {...inputProps} />
+          <div className='input-group-btn'>
+            <button onClick={this.handleToggleVisibility} type='button' className='btn btn-secondary'>
+              <i className='fa fa-calendar' />
+            </button>
+          </div>
+        </div>
 
-        {visible && <div className='picker card position-absolute'  style={{ zIndex: 999, right: '0px', top: '40px', width: '18em' }}>
+        {visible && <div className='picker card position-absolute' style={{ zIndex: 999, right: '0px', top: '40px', width: '18em' }}>
           <div className='card-header py-0 px-0 d-flex justify-content-between bg-secondary'>
             <ButtonGroup>
               <HeadButton onClick={() => this.handleToggleView('M')} text={page.format('MMMM')} />
@@ -217,9 +223,9 @@ export default class DateTimeSelector extends React.Component {
             </ButtonGroup>
           </div>
 
-          {view === 'D' && <DayGrid dow={dow} days={days} onClick={this.handleDateSelected} /> }
-          {view === 'M' && <Grid data={months} format='MMM' width={24} onClick={this.handleMonthSelected} /> }
-          {view === 'Y' && <Grid data={years} format='YYYY' width={24} onClick={this.handleYearSelected} /> }
+          {view === 'D' && <DayGrid dow={dow} days={days} onClick={this.handleDateSelected} />}
+          {view === 'M' && <Grid data={months} format='MMM' width={24} onClick={this.handleMonthSelected} />}
+          {view === 'Y' && <Grid data={years} format='YYYY' width={24} onClick={this.handleYearSelected} />}
 
           {!disableTime &&
             <div className='card-footer py-2 d-flex justify-content-center align-items-center bg-light'>

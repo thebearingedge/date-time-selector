@@ -206,11 +206,19 @@ var DateTimeSelector = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'input-group' },
-        _react2.default.createElement('input', _extends({ type: 'text', className: 'form-control', value: formattedSubmittedDate, placeholder: 'Pick a date...' }, inputProps)),
         _react2.default.createElement(
-          'span',
-          { className: 'input-group-addon', onClick: this.handleToggleVisibility },
-          _react2.default.createElement('i', { className: 'fa fa-calendar' })
+          'div',
+          { className: 'input-group' },
+          _react2.default.createElement('input', _extends({ type: 'text', className: 'form-control', value: formattedSubmittedDate, placeholder: 'Pick a date...' }, inputProps)),
+          _react2.default.createElement(
+            'div',
+            { className: 'input-group-btn' },
+            _react2.default.createElement(
+              'button',
+              { onClick: this.handleToggleVisibility, type: 'button', className: 'btn btn-secondary' },
+              _react2.default.createElement('i', { className: 'fa fa-calendar' })
+            )
+          )
         ),
         visible && _react2.default.createElement(
           'div',
