@@ -289,7 +289,7 @@ var DateTimeSelector = function (_React$Component) {
               ),
               _react2.default.createElement(
                 'button',
-                { onClick: this.handleSubmit, type: 'button', className: 'btn btn-sm btn-light', disabled: selected },
+                { onClick: this.handleSubmit, type: 'button', className: 'btn btn-sm btn-light', disabled: !selected },
                 _react2.default.createElement('i', { className: 'fa fa-check text-success' })
               )
             )
