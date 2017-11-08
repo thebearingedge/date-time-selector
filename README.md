@@ -42,7 +42,7 @@ https://codesandbox.io/s/881mmkvlwl
 
 | Prop | Type | Required | Description | Default |
 | :--- | :--- | :---: | :--- | :--- |
-| [`default`](#defaultProp) | Object | | A moment.js object.  This will be the default value selected in the selector |  |
-| [`onSelected`](#onSelectedProp) | Function | | Will be when a date is submitted | |
-| [`format`](#formatProp) | String | | [moment.js format string](https://momentjs.com/docs/#/displaying/format/). | 'L LTS' |
-| [`disableTime`](#disableTimeProp) | Boolean | | Set it to `true` if you'd like to hide the time inputs. | false |
+| `default` | Object | | A moment.js object.  This will be the default value selected in the selector |  |
+| `onSelected` | Function | | Will be called when a date is submitted. The selected moment is the only argument. Can be null. | |
+| `format` | String | | [moment.js format string](https://momentjs.com/docs/#/displaying/format/). | 'L LTS' |
+| `disableTime` | Boolean | | Set it to `true` if you'd like to hide the time inputs. | false |
