@@ -10,6 +10,7 @@ export default class DateTimeSelector extends React.Component {
     years: [],
     page: moment(),
     selected: null,
+    submitted: null,
     view: 'D',
     visible: false
   }
@@ -132,9 +133,9 @@ export default class DateTimeSelector extends React.Component {
   }
 
   handleSubmit = () => {
-    this.setState({ visible: false }, () => {
+    this.setState({ visible: false, submitted: this.state.selected }, () => {
       if (this.props.onSelected) {
-        this.props.onSelected(this.state.selected)
+        this.props.onSelected(this.state.submitted)
       }
     })
   }
@@ -184,11 +185,13 @@ export default class DateTimeSelector extends React.Component {
   }
 
   render () {
-    const { visible, dow, view, page, selected, days, months, years } = this.state
+    const { submitted, visible, dow, view, page, selected, days, months, years } = this.state
     const { format, disableTime, ...inputProps } = this.props
 
     const timeDisable = !selected
     const formattedDate = selected ? selected.format(format) : ''
+    const formattedSubmittedDate = submitted ? submitted.format(format) : ''
+
     const formattedTime = {
       hour: selected ? selected.hour() : 0,
       minute: selected ? selected.minute() : 0,
@@ -199,7 +202,7 @@ export default class DateTimeSelector extends React.Component {
 
     return (
       <div className='input-group'>
-        <input type='text' className='form-control' value={formattedDate} placeholder='Pick a date...' {...inputProps} />
+        <input type='text' className='form-control' value={formattedSubmittedDate} placeholder='Pick a date...' {...inputProps} />
         <span className='input-group-addon' onClick={this.handleToggleVisibility}><i className='fa fa-calendar' /></span>
         <div className={css} style={{ zIndex: 999, right: '0px', top: '40px', width: '18em' }}>
           <div className='card-header py-0 px-0 d-flex justify-content-between bg-secondary'>
