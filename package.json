@@ -1,0 +1,57 @@
+{
+  "name": "date-time-selector",
+  "version": "0.0.1",
+  "main": "src/index.js",
+  "description": "React / Bootstrap 4 Date Time Selector",
+  "repository": "https://github.com/unifymonitor/date-time-selector.git",
+  "author": "unifymonitor",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src --out-dir dist --ignore test.js",
+    "lint": "eslint src",
+    "test": "npm run lint && npm run build && jest --env=jsdom",
+    "clean": "rm -rf node_modules"
+  },
+  "dependencies": {
+    "moment": "^2.19.1",
+    "prop-types": "15.5.8"
+  },
+  "peerDependencies": {
+    "react": "^15.5.4"
+  },
+  "devDependencies": {
+    "babel-cli": "6.16.0",
+    "babel-core": "6.16.0",
+    "babel-eslint": "7.0.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "6.16.0",
+    "babel-preset-stage-2": "6.16.0",
+    "babel-register": "6.16.3",
+    "enzyme": "2.8.2",
+    "eslint": "3.6.1",
+    "eslint-config-standard": "6.2.0",
+    "eslint-config-standard-jsx": "3.2.0",
+    "eslint-config-standard-react": "4.2.0",
+    "eslint-plugin-promise": "2.0.1",
+    "eslint-plugin-react": "6.3.0",
+    "eslint-plugin-standard": "2.0.1",
+    "jest": "16.0.2",
+    "react": "15.5.4",
+    "react-dom": "15.5.4",
+    "react-test-renderer": "15.5.4"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      "react",
+      "stage-2"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint-config-standard",
+      "eslint-config-standard-react"
+    ],
+    "parser": "babel-eslint"
+  }
+}
