@@ -199,13 +199,12 @@ export default class DateTimeSelector extends React.Component {
       second: selected ? selected.second() : 0
     }
 
-    const css = 'picker card position-absolute ' + (visible ? 'd-block' : 'd-none')
-
     return (
       <div className='input-group'>
         <input type='text' className='form-control' value={formattedSubmittedDate} placeholder='Pick a date...' {...inputProps} />
         <span className='input-group-addon' onClick={this.handleToggleVisibility}><i className='fa fa-calendar' /></span>
-        <div className={css} style={{ zIndex: 999, right: '0px', top: '40px', width: '18em' }}>
+
+        {visible && <div className='picker card position-absolute'  style={{ zIndex: 999, right: '0px', top: '40px', width: '18em' }}>
           <div className='card-header py-0 px-0 d-flex justify-content-between bg-secondary'>
             <ButtonGroup>
               <HeadButton onClick={() => this.handleToggleView('M')} text={page.format('MMMM')} />
@@ -241,6 +240,7 @@ export default class DateTimeSelector extends React.Component {
             </ButtonGroup>
           </div>
         </div>
+        }
       </div>
     )
   }

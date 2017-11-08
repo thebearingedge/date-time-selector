@@ -203,8 +203,6 @@ var DateTimeSelector = function (_React$Component) {
         second: selected ? selected.second() : 0
       };
 
-      var css = 'picker card position-absolute ' + (visible ? 'd-block' : 'd-none');
-
       return _react2.default.createElement(
         'div',
         { className: 'input-group' },
@@ -214,9 +212,9 @@ var DateTimeSelector = function (_React$Component) {
           { className: 'input-group-addon', onClick: this.handleToggleVisibility },
           _react2.default.createElement('i', { className: 'fa fa-calendar' })
         ),
-        _react2.default.createElement(
+        visible && _react2.default.createElement(
           'div',
-          { className: css, style: { zIndex: 999, right: '0px', top: '40px', width: '18em' } },
+          { className: 'picker card position-absolute', style: { zIndex: 999, right: '0px', top: '40px', width: '18em' } },
           _react2.default.createElement(
             'div',
             { className: 'card-header py-0 px-0 d-flex justify-content-between bg-secondary' },
