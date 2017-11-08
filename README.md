@@ -33,3 +33,5 @@ The component renders an [input-group](https://getbootstrap.com/docs/4.0/compone
 `<DateTimeSelector> `
 
 `<DateTimeSelector onSelected={this.handleSelected} disableTime={true} format='L' default={moment()} />`
+
+### PropTypes
