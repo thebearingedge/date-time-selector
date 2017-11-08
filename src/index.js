@@ -231,7 +231,7 @@ export default class Picker extends React.Component {
           <div className='card-footer py-0 pr-0 d-flex justify-content-between align-items-center bg-light'>
             <p className='mb-0'><small><b>{formattedDate}</b></small></p>
             <ButtonGroup>
-              <button disabled={timeDisable} onClick={this.handleClickClear} type='button' className='' btn btn-light><i className='fa fa-trash-o text-primary' /></button>
+              <button onClick={this.handleClickClear} type='button' className='btn btn-light' disabled={timeDisable}><i className='fa fa-trash-o text-primary' /></button>
               <button onClick={this.handleClickNow} type='button' className='btn btn-light'><i className='fa fa-circle text-primary' /></button>
               <button onClick={this.handleSubmit} type='button' className='btn btn-light'><i className='fa fa-check text-success' /></button>
             </ButtonGroup>
