@@ -34,4 +34,11 @@ The component renders an [input-group](https://getbootstrap.com/docs/4.0/compone
 
 `<DateTimeSelector onSelected={this.handleSelected} disableTime={true} format='L' default={moment()} />`
 
-### PropTypes
+## Props
+
+| Prop | Type | Required | Description | Default |
+| :--- | :--- | :---: | :--- | :--- |
+| [`default`](#defaultProp) | Object | | A moment.js object.  This will be the default value selected in the selector |  |
+| [`onSelected`](#onSelectedProp) | Function | | Will be when a date is submitted | |
+| [`format`](#formatProp) | String | | [moment.js format string](https://momentjs.com/docs/#/displaying/format/). | 'L LTS' |
+| [`disableTime`](#disableTimeProp) | Boolean | | Set it to `true` if you'd like to hide the time inputs. | false |
