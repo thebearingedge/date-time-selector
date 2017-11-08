@@ -279,17 +279,17 @@ var DateTimeSelector = function (_React$Component) {
               null,
               _react2.default.createElement(
                 'button',
-                { onClick: this.handleClickClear, type: 'button', className: 'btn btn-light', disabled: timeDisable },
+                { onClick: this.handleClickClear, type: 'button', className: 'btn btn-sm btn-light', disabled: timeDisable },
                 _react2.default.createElement('i', { className: 'fa fa-trash-o text-primary' })
               ),
               _react2.default.createElement(
                 'button',
-                { onClick: this.handleClickNow, type: 'button', className: 'btn btn-light' },
+                { onClick: this.handleClickNow, type: 'button', className: 'btn btn-sm btn-light' },
                 _react2.default.createElement('i', { className: 'fa fa-circle text-primary' })
               ),
               _react2.default.createElement(
                 'button',
-                { onClick: this.handleSubmit, type: 'button', className: 'btn btn-light' },
+                { onClick: this.handleSubmit, type: 'button', className: 'btn btn-sm btn-light' },
                 _react2.default.createElement('i', { className: 'fa fa-check text-success' })
               )
             )
