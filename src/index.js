@@ -36,9 +36,10 @@ export default class DateTimeSelector extends React.Component {
     this.setState(
       {
         dow: daysOfWeek,
-        selected: this.props.default
+        selected: this.props.default,
+        submitted: this.props.default
       },
-      () => this.updatePage(this.state.page, this.state.selected, 'D')
+      () => this.updatePage(this.state.selected ? this.state.selected : this.state.page, this.state.selected, 'D')
     )
   }
 

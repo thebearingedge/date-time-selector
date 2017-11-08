@@ -166,9 +166,10 @@ var DateTimeSelector = function (_React$Component) {
 
       this.setState({
         dow: daysOfWeek,
-        selected: this.props.default
+        selected: this.props.default,
+        submitted: this.props.default
       }, function () {
-        return _this2.updatePage(_this2.state.page, _this2.state.selected, 'D');
+        return _this2.updatePage(_this2.state.selected ? _this2.state.selected : _this2.state.page, _this2.state.selected, 'D');
       });
     }
   }, {
