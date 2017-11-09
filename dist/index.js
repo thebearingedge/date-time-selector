@@ -143,12 +143,21 @@ var DateTimeSelector = function (_React$Component) {
       _this.moveOn(false);
     }, _this.handleClickNext = function () {
       _this.moveOn(true);
-    }, _this.handleUpdateHour = function (event) {
-      _this.setState({ selected: (0, _moment2.default)(_this.state.selected).hour(event.target.value) });
-    }, _this.handleUpdateMinute = function (event) {
-      _this.setState({ selected: (0, _moment2.default)(_this.state.selected).minute(event.target.value) });
-    }, _this.handleUpdateSecond = function (event) {
-      _this.setState({ selected: (0, _moment2.default)(_this.state.selected).second(event.target.value) });
+    }, _this.parseTime = function (value, max) {
+      var parsed = parseInt(value || '0', 10);
+      return parsed >= 0 && parsed <= max;
+    }, _this.handleUpdateHour = function (e) {
+      if (_this.parseTime(e.target.value, 23)) {
+        _this.setState({ selected: (0, _moment2.default)(_this.state.selected).hour(e.target.value) });
+      }
+    }, _this.handleUpdateMinute = function (e) {
+      if (_this.parseTime(e.target.value, 59)) {
+        _this.setState({ selected: (0, _moment2.default)(_this.state.selected).minute(e.target.value) });
+      }
+    }, _this.handleUpdateSecond = function (e) {
+      if (_this.parseTime(e.target.value, 59)) {
+        _this.setState({ selected: (0, _moment2.default)(_this.state.selected).second(e.target.value) });
+      }
     }, _this.handleToggleView = function (view) {
       _this.setState({ view: view });
     }, _this.handleToggleVisibility = function () {
@@ -198,9 +207,9 @@ var DateTimeSelector = function (_React$Component) {
       var formattedSubmittedDate = submitted ? submitted.format(format) : '';
 
       var formattedTime = {
-        hour: selected ? selected.hour() : 0,
-        minute: selected ? selected.minute() : 0,
-        second: selected ? selected.second() : 0
+        hour: selected ? selected.format('HH') : 'HH',
+        minute: selected ? selected.format('mm') : 'MM',
+        second: selected ? selected.format('ss') : 'SS'
       };
 
       return _react2.default.createElement(
@@ -337,23 +346,19 @@ var HeadButton = function HeadButton(_ref2) {
   );
 };
 
-var TimeInput = function TimeInput(_ref3) {
-  var value = _ref3.value,
-      max = _ref3.max,
-      placeholder = _ref3.placeholder,
-      onChange = _ref3.onChange,
-      disabled = _ref3.disabled;
-
-  value = value > max ? max : value;
-  var zerofilled = value < 10 ? ('0' + value).slice(-4) : value;
-  return _react2.default.createElement('input', { style: { width: '10%' }, disabled: disabled, value: zerofilled, placeholder: placeholder, onChange: onChange, type: 'text', className: 'form-control form-control-sm' });
+var TimeInput = function TimeInput(props) {
+  return _react2.default.createElement('input', _extends({ type: 'text', className: 'form-control form-control-sm', style: { width: '10%' },
+    onFocus: function onFocus(e) {
+      return e.target.select();
+    }
+  }, props));
 };
 
-var DayGrid = function DayGrid(_ref4) {
-  var _ref4$dow = _ref4.dow,
-      dow = _ref4$dow === undefined ? [] : _ref4$dow,
-      days = _ref4.days,
-      onClick = _ref4.onClick;
+var DayGrid = function DayGrid(_ref3) {
+  var _ref3$dow = _ref3.dow,
+      dow = _ref3$dow === undefined ? [] : _ref3$dow,
+      days = _ref3.days,
+      onClick = _ref3.onClick;
   return _react2.default.createElement(
     Grid,
     { data: days, format: 'D', width: 13, onClick: onClick },
@@ -367,8 +372,8 @@ var DayGrid = function DayGrid(_ref4) {
   );
 };
 
-var DowCaption = function DowCaption(_ref5) {
-  var date = _ref5.date;
+var DowCaption = function DowCaption(_ref4) {
+  var date = _ref4.date;
   return _react2.default.createElement(
     'div',
     { className: 'px-0 py-0 m-0 text-center', style: { width: '13%' } },
@@ -380,12 +385,12 @@ var DowCaption = function DowCaption(_ref5) {
   );
 };
 
-var Grid = function Grid(_ref6) {
-  var data = _ref6.data,
-      format = _ref6.format,
-      onClick = _ref6.onClick,
-      width = _ref6.width,
-      children = _ref6.children;
+var Grid = function Grid(_ref5) {
+  var data = _ref5.data,
+      format = _ref5.format,
+      onClick = _ref5.onClick,
+      width = _ref5.width,
+      children = _ref5.children;
   return _react2.default.createElement(
     'div',
     { className: 'card-body p-2' },
@@ -396,11 +401,11 @@ var Grid = function Grid(_ref6) {
   );
 };
 
-var GridRow = function GridRow(_ref7) {
-  var dates = _ref7.dates,
-      format = _ref7.format,
-      width = _ref7.width,
-      onClick = _ref7.onClick;
+var GridRow = function GridRow(_ref6) {
+  var dates = _ref6.dates,
+      format = _ref6.format,
+      width = _ref6.width,
+      onClick = _ref6.onClick;
   return _react2.default.createElement(
     Row,
     null,
@@ -410,12 +415,12 @@ var GridRow = function GridRow(_ref7) {
   );
 };
 
-var GridButton = function GridButton(_ref8) {
-  var date = _ref8.date,
-      format = _ref8.format,
-      disabled = _ref8.disabled,
-      _onClick = _ref8.onClick,
-      width = _ref8.width;
+var GridButton = function GridButton(_ref7) {
+  var date = _ref7.date,
+      format = _ref7.format,
+      disabled = _ref7.disabled,
+      _onClick = _ref7.onClick,
+      width = _ref7.width;
 
   var c = 'py-1 px-0 btn btn-sm text-center ';
 
@@ -442,8 +447,8 @@ var GridButton = function GridButton(_ref8) {
   );
 };
 
-var Row = function Row(_ref9) {
-  var children = _ref9.children;
+var Row = function Row(_ref8) {
+  var children = _ref8.children;
   return _react2.default.createElement(
     'div',
     { className: 'mb-1 d-flex flex-nowrap justify-content-between align-items-center' },
@@ -451,8 +456,8 @@ var Row = function Row(_ref9) {
   );
 };
 
-var ButtonGroup = function ButtonGroup(_ref10) {
-  var children = _ref10.children;
+var ButtonGroup = function ButtonGroup(_ref9) {
+  var children = _ref9.children;
   return _react2.default.createElement(
     'div',
     { className: 'btn-group', role: 'group' },

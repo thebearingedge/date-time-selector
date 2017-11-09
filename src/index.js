@@ -165,16 +165,27 @@ export default class DateTimeSelector extends React.Component {
     this.moveOn(true)
   }
 
-  handleUpdateHour = (event) => {
-    this.setState({ selected: moment(this.state.selected).hour(event.target.value) })
+  parseTime = (value, max) => {
+    const parsed = parseInt(value || '0', 10)
+    return (parsed >= 0 && parsed <= max)
   }
 
-  handleUpdateMinute = (event) => {
-    this.setState({ selected: moment(this.state.selected).minute(event.target.value) })
+  handleUpdateHour = (e) => {
+    if (this.parseTime(e.target.value, 23)) {
+      this.setState({ selected: moment(this.state.selected).hour(e.target.value) })
+    }
   }
 
-  handleUpdateSecond = (event) => {
-    this.setState({ selected: moment(this.state.selected).second(event.target.value) })
+  handleUpdateMinute = (e) => {
+    if (this.parseTime(e.target.value, 59)) {
+      this.setState({ selected: moment(this.state.selected).minute(e.target.value) })
+    }
+  }
+
+  handleUpdateSecond = (e) => {
+    if (this.parseTime(e.target.value, 59)) {
+      this.setState({ selected: moment(this.state.selected).second(e.target.value) })
+    }
   }
 
   handleToggleView = (view) => {
@@ -194,9 +205,9 @@ export default class DateTimeSelector extends React.Component {
     const formattedSubmittedDate = submitted ? submitted.format(format) : ''
 
     const formattedTime = {
-      hour: selected ? selected.hour() : 0,
-      minute: selected ? selected.minute() : 0,
-      second: selected ? selected.second() : 0
+      hour: selected ? selected.format('HH') : 'HH',
+      minute: selected ? selected.format('mm') : 'MM',
+      second: selected ? selected.format('ss') : 'SS'
     }
 
     return (
@@ -255,11 +266,11 @@ export default class DateTimeSelector extends React.Component {
 const HeadButton = ({ onClick, icon, text }) =>
   <button type='button' className='btn btn-sm btn-secondary' onClick={onClick}><i className={`fa fa-${icon}`} /> {text}</button>
 
-const TimeInput = ({ value, max, placeholder, onChange, disabled }) => {
-  value = value > max ? max : value
-  const zerofilled = (value < 10) ? ('0' + value).slice(-4) : value
+const TimeInput = (props) => {
   return (
-    <input style={{ width: '10%' }} disabled={disabled} value={zerofilled} placeholder={placeholder} onChange={onChange} type='text' className='form-control form-control-sm' />
+    <input type='text' className='form-control form-control-sm' style={{ width: '10%' }}
+      onFocus={(e) => e.target.select()}
+      {...props} />
   )
 }
 
