@@ -240,11 +240,11 @@ export default class DateTimeSelector extends React.Component {
 
           {!disableTime &&
             <div className='card-footer py-2 d-flex justify-content-center align-items-center bg-light'>
-              <button disabled={timeDisable} onClick={this.handleSetTimeStartOfDay} type='button' className='btn btn-sm btn-light'><i className='fa fa-fast-backward text-secondary' /></button>
+              <button disabled={timeDisable} onClick={this.handleSetTimeStartOfDay} type='button' className='btn btn-sm btn-light'><i className='fa fa-step-backward text-secondary' /></button>
               <TimeInput disabled={timeDisable} onChange={this.handleUpdateHour} value={formattedTime.hour} max={23} placeholder='HH' />&nbsp;:&nbsp;
               <TimeInput disabled={timeDisable} onChange={this.handleUpdateMinute} value={formattedTime.minute} max={59} placeholder='MM' />&nbsp;:&nbsp;
               <TimeInput disabled={timeDisable} onChange={this.handleUpdateSecond} value={formattedTime.second} max={59} placeholder='SS' />
-              <button disabled={timeDisable} onClick={this.handleSetTimeEndOfDay} type='button' className='btn btn-sm btn-light'><i className='fa fa-fast-forward text-secondary' /></button>
+              <button disabled={timeDisable} onClick={this.handleSetTimeEndOfDay} type='button' className='btn btn-sm btn-light'><i className='fa fa-step-forward text-secondary' /></button>
             </div>
           }
 

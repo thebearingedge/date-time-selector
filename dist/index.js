@@ -261,7 +261,7 @@ var DateTimeSelector = function (_React$Component) {
             _react2.default.createElement(
               'button',
               { disabled: timeDisable, onClick: this.handleSetTimeStartOfDay, type: 'button', className: 'btn btn-sm btn-light' },
-              _react2.default.createElement('i', { className: 'fa fa-fast-backward text-secondary' })
+              _react2.default.createElement('i', { className: 'fa fa-step-backward text-secondary' })
             ),
             _react2.default.createElement(TimeInput, { disabled: timeDisable, onChange: this.handleUpdateHour, value: formattedTime.hour, max: 23, placeholder: 'HH' }),
             '\xA0:\xA0',
@@ -271,7 +271,7 @@ var DateTimeSelector = function (_React$Component) {
             _react2.default.createElement(
               'button',
               { disabled: timeDisable, onClick: this.handleSetTimeEndOfDay, type: 'button', className: 'btn btn-sm btn-light' },
-              _react2.default.createElement('i', { className: 'fa fa-fast-forward text-secondary' })
+              _react2.default.createElement('i', { className: 'fa fa-step-forward text-secondary' })
             )
           ),
           _react2.default.createElement(
