@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import { parseDateTime } from 'date-time-parser'
 
 export default class DateTimeSelector extends React.Component {
 
@@ -12,7 +13,8 @@ export default class DateTimeSelector extends React.Component {
     selected: null,
     submitted: null,
     view: 'D',
-    visible: false
+    visible: false,
+    valid: true
   }
 
   static propTypes = {
@@ -25,32 +27,31 @@ export default class DateTimeSelector extends React.Component {
   static defaultProps = {
     default: null,
     disableTime: false,
-    format: 'L LTS',
+    format: 'L HH:mm:ss',
     onSelected: null
   }
 
   componentWillMount () {
-    const daysOfWeek = moment.weekdaysMin()
-    daysOfWeek.push(daysOfWeek.shift()) // Monday 1st
-
     this.setState(
       {
-        dow: daysOfWeek,
         selected: this.props.default,
         submitted: this.props.default
-      },
-      () => this.updatePage(this.state.selected ? this.state.selected : this.state.page, this.state.selected, 'D')
+      }
     )
   }
 
   updatePage = (newPage, selected, view) => {
+    const daysOfWeek = moment.weekdaysMin()
+    daysOfWeek.push(daysOfWeek.shift()) // Monday 1st
+
     this.setState({
+      dow: daysOfWeek,
       days: this.generateDays(newPage, selected),
       months: this.generateMonths(newPage, selected),
       years: this.generateYears(newPage, selected),
+      view: view,
       page: newPage,
-      selected: selected,
-      view: view
+      selected: selected
     })
   }
 
@@ -133,14 +134,6 @@ export default class DateTimeSelector extends React.Component {
     this.updatePage(moment(), null, this.state.view)
   }
 
-  handleSubmit = () => {
-    this.setState({ visible: false, submitted: this.state.selected }, () => {
-      if (this.props.onSelected) {
-        this.props.onSelected(this.state.submitted)
-      }
-    })
-  }
-
   moveOn = (goForward) => {
     switch (this.state.view) {
       case 'D':
@@ -193,16 +186,50 @@ export default class DateTimeSelector extends React.Component {
   }
 
   handleToggleVisibility = () => {
-    this.setState({ visible: !this.state.visible })
+    this.setState({ visible: !this.state.visible },
+     () => {
+       if (this.state.visible) {
+         this.updatePage(this.state.selected ? this.state.selected : this.state.page, this.state.selected, 'D')
+       }
+     })
+  }
+
+  handleInputChange= (e) => {
+    const mo = parseDateTime(e.target.value)
+
+    this.setState({
+      inputText: e.target.value,
+      valid: mo || !e.target.value,
+      selected: mo,
+      submitted: mo
+    },
+    () => {
+      if (this.props.onSelected) {
+        this.props.onSelected(this.state.submitted)
+      }
+    })
+  }
+
+  handleSubmit = () => {
+    this.setState({
+      inputText: this.state.selected ? this.state.selected.format(this.props.format) : '',
+      valid: true,
+      submitted: this.state.selected,
+      visible: false
+    },
+      () => {
+        if (this.props.onSelected) {
+          this.props.onSelected(this.state.submitted)
+        }
+      })
   }
 
   render () {
-    const { submitted, visible, dow, view, page, selected, days, months, years } = this.state
+    const { inputText, valid, visible, dow, view, page, selected, days, months, years } = this.state
     const { format, disableTime, ...inputProps } = this.props
 
     const timeDisable = !selected
     const formattedDate = selected ? selected.format(format) : ''
-    const formattedSubmittedDate = submitted ? submitted.format(format) : ''
 
     const formattedTime = {
       hour: selected ? selected.format('HH') : 'HH',
@@ -213,9 +240,9 @@ export default class DateTimeSelector extends React.Component {
     return (
       <div className='input-group'>
         <div className='input-group'>
-          <input type='text' className='form-control' value={formattedSubmittedDate} placeholder='Pick a date...' {...inputProps} />
+          <input type='text' className={`form-control ${valid ? '' : 'text-danger'}`} onChange={this.handleInputChange} value={inputText} placeholder='Pick a date...' {...inputProps} />
           <div className='input-group-btn'>
-            <button onClick={this.handleToggleVisibility} type='button' className='btn btn-secondary'>
+            <button onClick={this.handleToggleVisibility} type='button' className={`btn btn-secondary visible`}>
               <i className='fa fa-calendar' />
             </button>
           </div>

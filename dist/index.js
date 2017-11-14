@@ -20,6 +20,8 @@ var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);
 
+var _dateTimeParser = require('date-time-parser');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -52,15 +54,20 @@ var DateTimeSelector = function (_React$Component) {
       selected: null,
       submitted: null,
       view: 'D',
-      visible: false
+      visible: false,
+      valid: true
     }, _this.updatePage = function (newPage, selected, view) {
+      var daysOfWeek = _moment2.default.weekdaysMin();
+      daysOfWeek.push(daysOfWeek.shift()); // Monday 1st
+
       _this.setState({
+        dow: daysOfWeek,
         days: _this.generateDays(newPage, selected),
         months: _this.generateMonths(newPage, selected),
         years: _this.generateYears(newPage, selected),
+        view: view,
         page: newPage,
-        selected: selected,
-        view: view
+        selected: selected
       });
     }, _this.gen = function (mo, gridSize, rowSize, stepper, selected, formatString) {
       var result = [];
@@ -119,12 +126,6 @@ var DateTimeSelector = function (_React$Component) {
       _this.updatePage((0, _moment2.default)(), (0, _moment2.default)(), _this.state.view);
     }, _this.handleClickClear = function () {
       _this.updatePage((0, _moment2.default)(), null, _this.state.view);
-    }, _this.handleSubmit = function () {
-      _this.setState({ visible: false, submitted: _this.state.selected }, function () {
-        if (_this.props.onSelected) {
-          _this.props.onSelected(_this.state.submitted);
-        }
-      });
     }, _this.moveOn = function (goForward) {
       switch (_this.state.view) {
         case 'D':
@@ -161,33 +162,54 @@ var DateTimeSelector = function (_React$Component) {
     }, _this.handleToggleView = function (view) {
       _this.setState({ view: view });
     }, _this.handleToggleVisibility = function () {
-      _this.setState({ visible: !_this.state.visible });
+      _this.setState({ visible: !_this.state.visible }, function () {
+        if (_this.state.visible) {
+          _this.updatePage(_this.state.selected ? _this.state.selected : _this.state.page, _this.state.selected, 'D');
+        }
+      });
+    }, _this.handleInputChange = function (e) {
+      var mo = (0, _dateTimeParser.parseDateTime)(e.target.value);
+
+      _this.setState({
+        inputText: e.target.value,
+        valid: mo || !e.target.value,
+        selected: mo,
+        submitted: mo
+      }, function () {
+        if (_this.props.onSelected) {
+          _this.props.onSelected(_this.state.submitted);
+        }
+      });
+    }, _this.handleSubmit = function () {
+      _this.setState({
+        inputText: _this.state.selected ? _this.state.selected.format(_this.props.format) : '',
+        valid: true,
+        submitted: _this.state.selected,
+        visible: false
+      }, function () {
+        if (_this.props.onSelected) {
+          _this.props.onSelected(_this.state.submitted);
+        }
+      });
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(DateTimeSelector, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      var _this2 = this;
-
-      var daysOfWeek = _moment2.default.weekdaysMin();
-      daysOfWeek.push(daysOfWeek.shift()); // Monday 1st
-
       this.setState({
-        dow: daysOfWeek,
         selected: this.props.default,
         submitted: this.props.default
-      }, function () {
-        return _this2.updatePage(_this2.state.selected ? _this2.state.selected : _this2.state.page, _this2.state.selected, 'D');
       });
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       var _state = this.state,
-          submitted = _state.submitted,
+          inputText = _state.inputText,
+          valid = _state.valid,
           visible = _state.visible,
           dow = _state.dow,
           view = _state.view,
@@ -204,7 +226,6 @@ var DateTimeSelector = function (_React$Component) {
 
       var timeDisable = !selected;
       var formattedDate = selected ? selected.format(format) : '';
-      var formattedSubmittedDate = submitted ? submitted.format(format) : '';
 
       var formattedTime = {
         hour: selected ? selected.format('HH') : 'HH',
@@ -218,13 +239,13 @@ var DateTimeSelector = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'input-group' },
-          _react2.default.createElement('input', _extends({ type: 'text', className: 'form-control', value: formattedSubmittedDate, placeholder: 'Pick a date...' }, inputProps)),
+          _react2.default.createElement('input', _extends({ type: 'text', className: 'form-control ' + (valid ? '' : 'text-danger'), onChange: this.handleInputChange, value: inputText, placeholder: 'Pick a date...' }, inputProps)),
           _react2.default.createElement(
             'div',
             { className: 'input-group-btn' },
             _react2.default.createElement(
               'button',
-              { onClick: this.handleToggleVisibility, type: 'button', className: 'btn btn-secondary' },
+              { onClick: this.handleToggleVisibility, type: 'button', className: 'btn btn-secondary visible' },
               _react2.default.createElement('i', { className: 'fa fa-calendar' })
             )
           )
@@ -239,14 +260,14 @@ var DateTimeSelector = function (_React$Component) {
               ButtonGroup,
               null,
               _react2.default.createElement(HeadButton, { onClick: function onClick() {
-                  return _this3.handleToggleView('M');
+                  return _this2.handleToggleView('M');
                 }, text: page.format('MMMM') })
             ),
             _react2.default.createElement(
               ButtonGroup,
               null,
               _react2.default.createElement(HeadButton, { onClick: function onClick() {
-                  return _this3.handleToggleView('Y');
+                  return _this2.handleToggleView('Y');
                 }, text: page.year() }),
               _react2.default.createElement(HeadButton, { onClick: this.handleClickPrevious, icon: 'arrow-left' }),
               _react2.default.createElement(HeadButton, { onClick: this.handleClickNext, icon: 'arrow-right' })
@@ -327,7 +348,7 @@ DateTimeSelector.propTypes = {
 DateTimeSelector.defaultProps = {
   default: null,
   disableTime: false,
-  format: 'L LTS',
+  format: 'L HH:mm:ss',
   onSelected: null
 };
 exports.default = DateTimeSelector;
