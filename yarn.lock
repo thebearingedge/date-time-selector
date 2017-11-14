@@ -1247,9 +1247,9 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-"date-time-parser@git+ssh://git@github.com:unifymonitor/date-time-parser.git":
-  version "1.0.0"
-  resolved "git+ssh://git@github.com:unifymonitor/date-time-parser.git#3320f73e8e27ffdd134bdef8295e20385a622377"
+date-time-parser@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/date-time-parser/-/date-time-parser-1.0.1.tgz#8f0bd4025a65651f77fa22eeed057cdc4bb0a66a"
   dependencies:
     moment "^2.19.1"
 

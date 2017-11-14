@@ -15,7 +15,7 @@
   "dependencies": {
     "moment": "^2.19.1",
     "prop-types": "15.5.8",
-    "date-time-parser": "git+ssh://git@github.com:unifymonitor/date-time-parser.git"
+    "date-time-parser": "^1.0.1"
   },
   "peerDependencies": {
     "react": "^15.5.4"
