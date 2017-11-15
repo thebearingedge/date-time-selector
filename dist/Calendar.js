@@ -193,7 +193,6 @@ var Calendar = function (_React$Component) {
           years = _state.years,
           selection = _state.selection;
       var _props = this.props,
-          asDropDown = _props.asDropDown,
           visible = _props.visible,
           format = _props.format,
           disableTime = _props.disableTime;
@@ -208,11 +207,9 @@ var Calendar = function (_React$Component) {
         second: selection ? selection.format('ss') : 'SS'
       };
 
-      var css = !visible ? 'd-none' : asDropDown ? 'position-absolute' : '';
-
       return _react2.default.createElement(
         'div',
-        { className: 'picker card ' + css, style: { zIndex: 999, right: '10px', top: '40px', width: '18em' } },
+        { className: 'picker card ' + (visible ? 'position-absolute' : 'd-none'), style: { zIndex: 999, right: '0px', top: '40px', width: '18em' } },
         _react2.default.createElement(
           'div',
           { className: 'card-header py-0 px-0 d-flex justify-content-between bg-secondary' },
@@ -303,16 +300,14 @@ Calendar.propTypes = {
   value: _propTypes2.default.object, // a moment
   disableTime: _propTypes2.default.bool,
   format: _propTypes2.default.string,
-  onSubmit: _propTypes2.default.func,
-  asDropDown: _propTypes2.default.bool
+  onSubmit: _propTypes2.default.func
 };
 Calendar.defaultProps = {
   visible: false,
   value: null,
   disableTime: false,
   format: 'L HH:mm:s',
-  onSubmit: null,
-  asDropDown: false
+  onSubmit: null
 };
 exports.default = Calendar;
 
