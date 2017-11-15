@@ -1,6 +1,6 @@
 {
   "name": "date-time-selector",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "main": "dist/index.js",
   "description": "React / Bootstrap 4 Date Time Selector",
   "repository": "https://github.com/unifymonitor/date-time-selector.git",
