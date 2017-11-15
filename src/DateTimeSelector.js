@@ -78,11 +78,12 @@ export default class DateTimeSelector extends React.Component {
 
   render () {
     const {isValidDate, showCalendar, calendarValue, inputValue} = this.state
+    const {value, format, onValidDateEntered, ...inputProps} = this.props
 
     return (
       <div className='input-group'>
         <div className='input-group'>
-          <input type='text' className={`form-control ${isValidDate ? '' : 'text-danger'}`} onChange={this.handleTextboxChange} value={inputValue} placeholder='Date/time...' />
+          <input type='text' className={`form-control ${isValidDate ? '' : 'text-danger'}`} onChange={this.handleTextboxChange} value={inputValue} placeholder='Date/time...' {...inputProps} />
           <div className='input-group-btn'>
             <button onClick={this.handleToggleVisibility} type='button' className={`btn btn-secondary visible`}>
               <i className='fa fa-calendar' />

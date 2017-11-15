@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -21,6 +23,8 @@ var _Calendar2 = _interopRequireDefault(_Calendar);
 var _dateTimeParser = require('date-time-parser');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -112,6 +116,11 @@ var DateTimeSelector = function (_React$Component) {
           calendarValue = _state.calendarValue,
           inputValue = _state.inputValue;
 
+      var _props = this.props,
+          value = _props.value,
+          format = _props.format,
+          onValidDateEntered = _props.onValidDateEntered,
+          inputProps = _objectWithoutProperties(_props, ['value', 'format', 'onValidDateEntered']);
 
       return _react2.default.createElement(
         'div',
@@ -119,7 +128,7 @@ var DateTimeSelector = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'input-group' },
-          _react2.default.createElement('input', { type: 'text', className: 'form-control ' + (isValidDate ? '' : 'text-danger'), onChange: this.handleTextboxChange, value: inputValue, placeholder: 'Date/time...' }),
+          _react2.default.createElement('input', _extends({ type: 'text', className: 'form-control ' + (isValidDate ? '' : 'text-danger'), onChange: this.handleTextboxChange, value: inputValue, placeholder: 'Date/time...' }, inputProps)),
           _react2.default.createElement(
             'div',
             { className: 'input-group-btn' },
