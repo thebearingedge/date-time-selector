@@ -13,12 +13,11 @@
     "clean": "rm -rf node_modules"
   },
   "dependencies": {
+    "date-time-parser": "^1.0.1",
     "moment": "^2.19.1",
     "prop-types": "15.5.8",
-    "date-time-parser": "^1.0.1"
-  },
-  "peerDependencies": {
-    "react": "^15.5.4"
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1"
   },
   "devDependencies": {
     "babel-cli": "6.16.0",
@@ -37,8 +36,6 @@
     "eslint-plugin-react": "6.3.0",
     "eslint-plugin-standard": "2.0.1",
     "jest": "16.0.2",
-    "react": "15.5.4",
-    "react-dom": "15.5.4",
     "react-test-renderer": "15.5.4"
   },
   "babel": {
