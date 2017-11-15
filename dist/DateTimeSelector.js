@@ -139,7 +139,7 @@ var DateTimeSelector = function (_React$Component) {
             )
           )
         ),
-        _react2.default.createElement(_Calendar2.default, { visible: showCalendar, value: calendarValue, onSubmit: this.handleCalendarSelection })
+        _react2.default.createElement(_Calendar2.default, { asDropDown: true, visible: showCalendar, value: calendarValue, onSubmit: this.handleCalendarSelection })
       );
     }
   }]);

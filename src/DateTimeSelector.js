@@ -90,7 +90,7 @@ export default class DateTimeSelector extends React.Component {
             </button>
           </div>
         </div>
-        <Calendar visible={showCalendar} value={calendarValue} onSubmit={this.handleCalendarSelection} />
+        <Calendar asDropDown visible={showCalendar} value={calendarValue} onSubmit={this.handleCalendarSelection} />
       </div>
     )
   }

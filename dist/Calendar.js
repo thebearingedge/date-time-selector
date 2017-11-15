@@ -164,7 +164,13 @@ var Calendar = function (_React$Component) {
   _createClass(Calendar, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      this.setState({ selection: this.props.value });
+      var _this2 = this;
+
+      this.setState({ selection: this.props.value }, function () {
+        if (_this2.props.visible) {
+          _this2.updatePage(_this2.state.selection ? _this2.state.selection : _this2.state.page, _this2.state.selection, 'D');
+        }
+      });
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -182,7 +188,7 @@ var Calendar = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _state = this.state,
           dow = _state.dow,
@@ -193,6 +199,7 @@ var Calendar = function (_React$Component) {
           years = _state.years,
           selection = _state.selection;
       var _props = this.props,
+          asDropDown = _props.asDropDown,
           visible = _props.visible,
           format = _props.format,
           disableTime = _props.disableTime;
@@ -207,9 +214,12 @@ var Calendar = function (_React$Component) {
         second: selection ? selection.format('ss') : 'SS'
       };
 
+      var css = !visible ? 'd-none ' : asDropDown ? ' position-absolute' : ' ';
+      var styles = !asDropDown ? { width: '18em' } : { zIndex: 999, right: '0px', top: '40px', width: '18em' };
+
       return _react2.default.createElement(
         'div',
-        { className: 'picker card ' + (visible ? 'position-absolute' : 'd-none'), style: { zIndex: 999, right: '0px', top: '40px', width: '18em' } },
+        { className: 'picker card ' + css, style: styles },
         _react2.default.createElement(
           'div',
           { className: 'card-header py-0 px-0 d-flex justify-content-between bg-secondary' },
@@ -217,14 +227,14 @@ var Calendar = function (_React$Component) {
             ButtonGroup,
             null,
             _react2.default.createElement(HeadButton, { onClick: function onClick() {
-                return _this2.handleToggleView('M');
+                return _this3.handleToggleView('M');
               }, text: page.format('MMMM') })
           ),
           _react2.default.createElement(
             ButtonGroup,
             null,
             _react2.default.createElement(HeadButton, { onClick: function onClick() {
-                return _this2.handleToggleView('Y');
+                return _this3.handleToggleView('Y');
               }, text: page.year() }),
             _react2.default.createElement(HeadButton, { onClick: this.handleClickPrevious, icon: 'arrow-left' }),
             _react2.default.createElement(HeadButton, { onClick: this.handleClickNext, icon: 'arrow-right' })
@@ -300,14 +310,16 @@ Calendar.propTypes = {
   value: _propTypes2.default.object, // a moment
   disableTime: _propTypes2.default.bool,
   format: _propTypes2.default.string,
-  onSubmit: _propTypes2.default.func
+  onSubmit: _propTypes2.default.func,
+  asDropDown: _propTypes2.default.bool
 };
 Calendar.defaultProps = {
   visible: false,
   value: null,
   disableTime: false,
   format: 'L HH:mm:s',
-  onSubmit: null
+  onSubmit: null,
+  asDropDown: false
 };
 exports.default = Calendar;
 
@@ -326,7 +338,7 @@ var HeadButton = function HeadButton(_ref2) {
 };
 
 var TimeInput = function TimeInput(props) {
-  return _react2.default.createElement('input', _extends({ type: 'text', className: 'form-control form-control-sm', style: { width: '10%' },
+  return _react2.default.createElement('input', _extends({ type: 'text', className: 'form-control form-control-sm w-25',
     onFocus: function onFocus(e) {
       return e.target.select();
     }

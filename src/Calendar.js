@@ -18,7 +18,8 @@ export default class Calendar extends React.Component {
     value: PropTypes.object, // a moment
     disableTime: PropTypes.bool,
     format: PropTypes.string,
-    onSubmit: PropTypes.func
+    onSubmit: PropTypes.func,
+    asDropDown: PropTypes.bool
   }
 
   static defaultProps = {
@@ -26,11 +27,16 @@ export default class Calendar extends React.Component {
     value: null,
     disableTime: false,
     format: 'L HH:mm:s',
-    onSubmit: null
+    onSubmit: null,
+    asDropDown: false
   }
 
   componentWillMount () {
-    this.setState({selection: this.props.value})
+    this.setState({selection: this.props.value}, () => {
+      if (this.props.visible) {
+        this.updatePage(this.state.selection ? this.state.selection : this.state.page, this.state.selection, 'D')
+      }
+    })
   }
 
   componentWillReceiveProps (nextProps) {
@@ -198,7 +204,7 @@ export default class Calendar extends React.Component {
 
   render () {
     const { dow, view, page, days, months, years, selection } = this.state
-    const { visible, format, disableTime } = this.props
+    const { asDropDown, visible, format, disableTime } = this.props
 
     const timeDisable = !selection
     const formattedDate = selection ? selection.format(format) : ''
@@ -209,8 +215,11 @@ export default class Calendar extends React.Component {
       second: selection ? selection.format('ss') : 'SS'
     }
 
+    const css = !visible ? 'd-none ' : asDropDown ? ' position-absolute' : ' '
+    const styles = !asDropDown ? { width: '18em' } : { zIndex: 999, right: '0px', top: '40px', width: '18em' }
+
     return (
-      <div className={`picker card ${visible ? 'position-absolute' : 'd-none'}`} style={{ zIndex: 999, right: '0px', top: '40px', width: '18em' }}>
+      <div className={`picker card ${css}`} style={styles}>
         <div className='card-header py-0 px-0 d-flex justify-content-between bg-secondary'>
           <ButtonGroup>
             <HeadButton onClick={() => this.handleToggleView('M')} text={page.format('MMMM')} />
@@ -255,7 +264,7 @@ const HeadButton = ({ onClick, icon, text }) =>
 
 const TimeInput = (props) => {
   return (
-    <input type='text' className='form-control form-control-sm' style={{ width: '10%' }}
+    <input type='text' className='form-control form-control-sm w-25'
       onFocus={(e) => e.target.select()}
       {...props} />
   )
