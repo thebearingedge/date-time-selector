@@ -50,17 +50,7 @@ var DateTimeSelector = function (_React$Component) {
     }, _this.handleToggleVisibility = function () {
       _this.setState({ showCalendar: !_this.state.showCalendar });
     }, _this.handleTextboxChange = function (e) {
-      _this.foo(e.target.value);
-      // const mo = parseDateTime(e.target.value)
-      // this.setState({
-      //   inputValue: e.target.value,
-      //   isValidDate: mo !== null,
-      //   calendarValue: mo
-      // }, () => {
-      //   if (this.props.onValidDateEntered) {
-      //     this.props.onValidDateEntered(mo)
-      //   }
-      // })
+      _this.updateDate(e.target.value);
     }, _this.handleCalendarSelection = function (mo) {
       _this.setState({
         showCalendar: false,
@@ -93,15 +83,13 @@ var DateTimeSelector = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      console.log('nextProps', nextProps);
-      console.log('his.props', this.props);
       if (nextProps.value !== this.props.value) {
-        this.foo(nextProps.value);
+        this.updateDate(nextProps.value);
       }
     }
   }, {
-    key: 'foo',
-    value: function foo(input) {
+    key: 'updateDate',
+    value: function updateDate(input) {
       var _this3 = this;
 
       var mo = (0, _dateTimeParser.parseDateTime)(input);
