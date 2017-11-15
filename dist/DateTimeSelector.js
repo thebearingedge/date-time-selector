@@ -50,16 +50,17 @@ var DateTimeSelector = function (_React$Component) {
     }, _this.handleToggleVisibility = function () {
       _this.setState({ showCalendar: !_this.state.showCalendar });
     }, _this.handleTextboxChange = function (e) {
-      var mo = (0, _dateTimeParser.parseDateTime)(e.target.value);
-      _this.setState({
-        inputValue: e.target.value,
-        isValidDate: mo !== null,
-        calendarValue: mo
-      }, function () {
-        if (_this.props.onValidDateEntered) {
-          _this.props.onValidDateEntered(mo);
-        }
-      });
+      _this.foo(e.target.value);
+      // const mo = parseDateTime(e.target.value)
+      // this.setState({
+      //   inputValue: e.target.value,
+      //   isValidDate: mo !== null,
+      //   calendarValue: mo
+      // }, () => {
+      //   if (this.props.onValidDateEntered) {
+      //     this.props.onValidDateEntered(mo)
+      //   }
+      // })
     }, _this.handleCalendarSelection = function (mo) {
       _this.setState({
         showCalendar: false,
@@ -89,22 +90,31 @@ var DateTimeSelector = function (_React$Component) {
         }
       });
     }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      console.log('nextProps', nextProps);
+      console.log('his.props', this.props);
+      if (nextProps.value !== this.props.value) {
+        this.foo(nextProps.value);
+      }
+    }
+  }, {
+    key: 'foo',
+    value: function foo(input) {
+      var _this3 = this;
 
-    // componentWillReceiveProps (nextProps) {
-    //   if (nextProps.value !== this.state.inputValue) {
-    //     const mo = parseDateTime(nextProps.value)
-    //     this.setState({
-    //       inputValue: nextProps.value,
-    //       isValidDate: mo !== null,
-    //       calendarValue: mo
-    //     }, () => {
-    //       if (this.props.onValidDateEntered) {
-    //         this.props.onValidDateEntered(mo)
-    //       }
-    //     })
-    //   }
-    // }
-
+      var mo = (0, _dateTimeParser.parseDateTime)(input);
+      this.setState({
+        inputValue: input,
+        isValidDate: mo !== null,
+        calendarValue: mo
+      }, function () {
+        if (_this3.props.onValidDateEntered) {
+          _this3.props.onValidDateEntered(mo);
+        }
+      });
+    }
   }, {
     key: 'render',
     value: function render() {

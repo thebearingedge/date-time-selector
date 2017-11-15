@@ -37,29 +37,16 @@ export default class DateTimeSelector extends React.Component {
     })
   }
 
-  // componentWillReceiveProps (nextProps) {
-  //   if (nextProps.value !== this.state.inputValue) {
-  //     const mo = parseDateTime(nextProps.value)
-  //     this.setState({
-  //       inputValue: nextProps.value,
-  //       isValidDate: mo !== null,
-  //       calendarValue: mo
-  //     }, () => {
-  //       if (this.props.onValidDateEntered) {
-  //         this.props.onValidDateEntered(mo)
-  //       }
-  //     })
-  //   }
-  // }
-
-  handleToggleVisibility = () => {
-    this.setState({ showCalendar: !this.state.showCalendar })
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.value !== this.props.value) {
+      this.updateDate(nextProps.value)
+    }
   }
 
-  handleTextboxChange = (e) => {
-    const mo = parseDateTime(e.target.value)
+  updateDate (input) {
+    const mo = parseDateTime(input)
     this.setState({
-      inputValue: e.target.value,
+      inputValue: input,
       isValidDate: mo !== null,
       calendarValue: mo
     }, () => {
@@ -67,6 +54,14 @@ export default class DateTimeSelector extends React.Component {
         this.props.onValidDateEntered(mo)
       }
     })
+  }
+
+  handleToggleVisibility = () => {
+    this.setState({ showCalendar: !this.state.showCalendar })
+  }
+
+  handleTextboxChange = (e) => {
+    this.updateDate(e.target.value)
   }
 
   handleCalendarSelection = (mo) => {
