@@ -18,9 +18,9 @@ var _DateTimeRangeSelector = require('./DateTimeRangeSelector');
 
 var _DateTimeRangeSelector2 = _interopRequireDefault(_DateTimeRangeSelector);
 
-var _DropDownSelect = require('./DropDownSelect');
+var _RefreshRateDropDown = require('./RefreshRateDropDown');
 
-var _DropDownSelect2 = _interopRequireDefault(_DropDownSelect);
+var _RefreshRateDropDown2 = _interopRequireDefault(_RefreshRateDropDown);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -45,34 +45,23 @@ var DashboardDateRange = function (_React$Component) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DashboardDateRange.__proto__ || Object.getPrototypeOf(DashboardDateRange)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      range: null,
-      options: [{ value: 0, caption: 'off', selected: !false, color: 'danger' }, { value: 5000, caption: '5s', selected: false, color: 'success' }, { value: 10000, caption: '10s', selected: false, color: 'success' }, { value: 30000, caption: '30s', selected: false, color: 'success' }, { value: 60000, caption: '1m', selected: false, color: 'success' }, { value: 300000, caption: '5m', selected: false, color: 'success' }, { value: 900000, caption: '15m', selected: false, color: 'success' }, { value: 1800000, caption: '30m', selected: false, color: 'success' }, { value: 3600000, caption: '1h', selected: false, color: 'success' }]
+      range: null
     }, _this.handleRangeChange = function (range) {
       _this.setState({ range: range });
     }, _this.handleRefreshRateChange = function (rate) {
-      _this.setState({
-        options: _this.state.options.map(function (d) {
-          d.selected = d.value === rate;
-          return d;
-        })
-      }, function () {
-        clearInterval(_this.timer);
-        if (_this.props.onChange && rate > 0) {
-          // Set up the timer
-          _this.timer = setInterval(function () {
-            return _this.props.onChange(_this.state.range);
-          }, rate);
-        }
-      });
+      clearInterval(_this.timer);
+      if (_this.props.onChange && rate > 0) {
+        // Set up the timer
+        _this.timer = setInterval(function () {
+          return _this.props.onChange(_this.state.range);
+        }, rate);
+      }
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(DashboardDateRange, [{
     key: 'render',
     value: function render() {
-      var options = this.state.options;
-
-
       return _react2.default.createElement(
         'div',
         { className: 'row' },
@@ -84,7 +73,7 @@ var DashboardDateRange = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'col-sm-2' },
-          _react2.default.createElement(_DropDownSelect2.default, { options: options, onChange: this.handleRefreshRateChange })
+          _react2.default.createElement(_RefreshRateDropDown2.default, { onChange: this.handleRefreshRateChange })
         )
       );
     }

@@ -26,8 +26,10 @@ export default class DropDownSelect extends React.Component {
   }
 
   handleClick = (e) => {
+    console.log('e.target.value11', e.target.value)
+
     if (this.props.onChange) {
-      this.props.onChange(parseInt(e.target.value))
+      this.props.onChange(e.target.value)
     }
   }
 
@@ -39,7 +41,7 @@ export default class DropDownSelect extends React.Component {
       <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle color={selected.color}><i className='fa fa-refresh' /> {selected ? selected.caption : ''}</DropdownToggle>
         <DropdownMenu>
-          {options.map((o, i) => {
+          {options.map(o => {
             return <DropdownItem onClick={this.handleClick} key={o.value} value={o.value}>{o.caption}</DropdownItem>
           })}
         </DropdownMenu>
