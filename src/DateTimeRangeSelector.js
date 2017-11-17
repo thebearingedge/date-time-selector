@@ -5,46 +5,72 @@ import DateTimeSelector from './DateTimeSelector'
 export default class DateTimeRangeSelector extends React.Component {
 
   state = {
-    from: null,
-    to: null
+    from: {mo: null, text: ''},
+    to: {mo: null, text: ''}
   }
 
   static propTypes = {
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    from: PropTypes.string,
+    to: PropTypes.string
   }
 
   static defaultProps = {
-    onChange: null
+    onChange: null,
+    from: '',
+    to: ''
   }
 
-  handleFromDateSelected = (moment) => {
-    this.setState({ from: moment },
+  componentDidMount () {
+    this.setState({
+      from: { mo: null, text: this.props.from },
+      to: { mo: null, text: this.props.to }
+    })
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.from !== this.props.from || nextProps.to !== this.props.to) {
+      this.setState({
+        from: { mo: null, text: nextProps.from },
+        to: { mo: null, text: nextProps.to }
+      })
+    }
+  }
+
+  handleFromDateSelected = (selected) => {
+    this.setState({ from: selected },
       () => {
         if (this.props.onChange) {
-          this.props.onChange(this.state)
+          this.props.onChange({from: this.state.from, to: this.state.to})
         }
       })
   }
 
-  handleToDateSelected = (moment) => {
-    this.setState({ to: moment },
+  handleToDateSelected = (selected) => {
+    this.setState({ to: selected },
       () => {
         if (this.props.onChange) {
-          this.props.onChange(this.state)
+          this.props.onChange({from: this.state.from, to: this.state.to})
         }
       })
   }
 
   render () {
-    const {fromValue, toValue} = this.state
+    const {from, to} = this.state
 
     return (
       <div>
         <div className='form-group'>
-          <DateTimeSelector value={fromValue} placeholder='From...' onValidDateEntered={this.handleFromDateSelected} />
+          <DateTimeSelector
+            value={from ? from.text : ''}
+            placeholder='From...'
+            onValidDateEntered={this.handleFromDateSelected} />
         </div>
         <div className='form-group'>
-          <DateTimeSelector value={toValue} placeholder='To...' onValidDateEntered={this.handleToDateSelected} />
+          <DateTimeSelector
+            value={to ? to.text : ''}
+            placeholder='To...'
+            onValidDateEntered={this.handleToDateSelected} />
         </div>
       </div>
     )

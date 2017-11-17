@@ -62,7 +62,7 @@ var DateTimeSelector = function (_React$Component) {
         inputValue: mo ? mo.format(_this.props.format) : ''
       }, function () {
         if (_this.props.onValidDateEntered) {
-          _this.props.onValidDateEntered(mo);
+          _this.props.onValidDateEntered({ moment: mo, text: _this.state.inputValue });
         }
       });
     }, _temp), _possibleConstructorReturn(_this, _ret);
@@ -97,13 +97,14 @@ var DateTimeSelector = function (_React$Component) {
       var _this3 = this;
 
       var mo = (0, _dateTimeParser.parseDateTime)(input);
+
       this.setState({
         inputValue: input,
         isValidDate: mo !== null,
         calendarValue: mo
       }, function () {
         if (_this3.props.onValidDateEntered) {
-          _this3.props.onValidDateEntered(mo);
+          _this3.props.onValidDateEntered({ moment: mo, text: _this3.state.inputValue });
         }
       });
     }

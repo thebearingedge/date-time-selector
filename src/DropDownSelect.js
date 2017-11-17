@@ -26,8 +26,6 @@ export default class DropDownSelect extends React.Component {
   }
 
   handleClick = (e) => {
-    console.log('e.target.value11', e.target.value)
-
     if (this.props.onChange) {
       this.props.onChange(e.target.value)
     }

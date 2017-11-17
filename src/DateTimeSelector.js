@@ -45,13 +45,14 @@ export default class DateTimeSelector extends React.Component {
 
   updateDate (input) {
     const mo = parseDateTime(input)
+
     this.setState({
       inputValue: input,
       isValidDate: mo !== null,
       calendarValue: mo
     }, () => {
       if (this.props.onValidDateEntered) {
-        this.props.onValidDateEntered(mo)
+        this.props.onValidDateEntered({ moment: mo, text: this.state.inputValue })
       }
     })
   }
@@ -71,7 +72,7 @@ export default class DateTimeSelector extends React.Component {
       inputValue: mo ? mo.format(this.props.format) : ''
     }, () => {
       if (this.props.onValidDateEntered) {
-        this.props.onValidDateEntered(mo)
+        this.props.onValidDateEntered({ moment: mo, text: this.state.inputValue })
       }
     })
   }

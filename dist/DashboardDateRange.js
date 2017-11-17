@@ -22,6 +22,12 @@ var _RefreshRateDropDown = require('./RefreshRateDropDown');
 
 var _RefreshRateDropDown2 = _interopRequireDefault(_RefreshRateDropDown);
 
+var _CommonRangesDropDown = require('./CommonRangesDropDown');
+
+var _CommonRangesDropDown2 = _interopRequireDefault(_CommonRangesDropDown);
+
+var _dateTimeParser = require('date-time-parser');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45,35 +51,76 @@ var DashboardDateRange = function (_React$Component) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DashboardDateRange.__proto__ || Object.getPrototypeOf(DashboardDateRange)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      range: null
+      from: '',
+      to: ''
     }, _this.handleRangeChange = function (range) {
       _this.setState({ range: range });
     }, _this.handleRefreshRateChange = function (rate) {
       clearInterval(_this.timer);
-      if (_this.props.onChange && rate > 0) {
-        // Set up the timer
-        _this.timer = setInterval(function () {
-          return _this.props.onChange(_this.state.range);
-        }, rate);
-      }
+
+      _this.setState({ rate: rate }, function () {
+        if (_this.props.onRangeChange && _this.state.rate > 0) {
+          _this.timer = setInterval(function () {
+            var arg = _this.state.range;
+
+            if (arg) {
+              if (arg.from && arg.from.mo) {
+                arg.from.live = (0, _dateTimeParser.parseDateTime)(arg.from.text);
+              }
+
+              if (arg.to && arg.to.mo) {
+                arg.to.live = (0, _dateTimeParser.parseDateTime)(arg.to.text);
+              }
+            }
+            _this.props.onRangeChange(arg);
+          }, _this.state.rate);
+        }
+      });
+    }, _this.handleCommonRangeSelected = function (from, to) {
+      _this.setState({
+        from: from,
+        to: to
+      });
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(DashboardDateRange, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.setState({
+        from: this.props.from,
+        to: this.props.to,
+        rate: this.props.rate
+      });
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      // if (this.props.value !== nextProps.value) {
+      //   this.updateDate(nextProps.value, 'componentWillReceiveProps')
+      // }
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _state = this.state,
+          from = _state.from,
+          to = _state.to;
+
+
       return _react2.default.createElement(
         'div',
         { className: 'row' },
         _react2.default.createElement(
           'div',
           { className: 'col-sm-10' },
-          _react2.default.createElement(_DateTimeRangeSelector2.default, { onChange: this.handleRangeChange })
+          _react2.default.createElement(_DateTimeRangeSelector2.default, { from: from, to: to, onChange: this.handleRangeChange })
         ),
         _react2.default.createElement(
           'div',
           { className: 'col-sm-2' },
-          _react2.default.createElement(_RefreshRateDropDown2.default, { onChange: this.handleRefreshRateChange })
+          _react2.default.createElement(_RefreshRateDropDown2.default, { onChange: this.handleRefreshRateChange }),
+          _react2.default.createElement(_CommonRangesDropDown2.default, { onChange: this.handleCommonRangeSelected })
         )
       );
     }
@@ -83,9 +130,15 @@ var DashboardDateRange = function (_React$Component) {
 }(_react2.default.Component);
 
 DashboardDateRange.propTypes = {
-  onChange: _propTypes2.default.func
+  onRangeChange: _propTypes2.default.func,
+  from: _propTypes2.default.string,
+  to: _propTypes2.default.string,
+  rate: _propTypes2.default.number
 };
 DashboardDateRange.defaultProps = {
-  onChange: null
+  onChange: null,
+  from: '',
+  to: '',
+  rate: 0
 };
 exports.default = DashboardDateRange;
