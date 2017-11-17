@@ -53,11 +53,11 @@ export default class DashboardDateRange extends React.Component {
           () => {
             const { range: arg } = this.state
             if (arg) {
-              if (arg.from && arg.from.mo) {
+              if (arg.from && arg.from.moment) {
                 arg.from.live = parseDateTime(arg.from.text)
               }
 
-              if (arg.to && arg.to.mo) {
+              if (arg.to && arg.to.moment) {
                 arg.to.live = parseDateTime(arg.to.text)
               }
             }

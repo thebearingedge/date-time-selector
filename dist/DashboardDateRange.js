@@ -64,14 +64,16 @@ var DashboardDateRange = function (_React$Component) {
             var arg = _this.state.range;
 
             if (arg) {
-              if (arg.from && arg.from.mo) {
+
+              if (arg.from && arg.from.moment) {
                 arg.from.live = (0, _dateTimeParser.parseDateTime)(arg.from.text);
               }
 
-              if (arg.to && arg.to.mo) {
+              if (arg.to && arg.to.moment) {
                 arg.to.live = (0, _dateTimeParser.parseDateTime)(arg.to.text);
               }
             }
+            console.log('arg', arg);
             _this.props.onRangeChange(arg);
           }, _this.state.rate);
         }
