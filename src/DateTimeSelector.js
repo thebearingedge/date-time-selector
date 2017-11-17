@@ -91,8 +91,8 @@ export default class DateTimeSelector extends React.Component {
             <button onClick={this.handleToggleVisibility} type='button' className={`btn btn-secondary visible`}>
               <i className='fa fa-calendar' />
             </button>
-            {children}
           </div>
+          {children}
         </div>
         <Calendar asDropDown visible={showCalendar} value={calendarValue} onSubmit={this.handleCalendarSelection} />
       </div>

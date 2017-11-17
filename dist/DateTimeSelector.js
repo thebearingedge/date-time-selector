@@ -138,9 +138,9 @@ var DateTimeSelector = function (_React$Component) {
               'button',
               { onClick: this.handleToggleVisibility, type: 'button', className: 'btn btn-secondary visible' },
               _react2.default.createElement('i', { className: 'fa fa-calendar' })
-            ),
-            children
-          )
+            )
+          ),
+          children
         ),
         _react2.default.createElement(_Calendar2.default, { asDropDown: true, visible: showCalendar, value: calendarValue, onSubmit: this.handleCalendarSelection })
       );

@@ -58,8 +58,7 @@ var DropDownSelect = function (_React$Component) {
 
       var _props = this.props,
           right = _props.right,
-          options = _props.options,
-          block = _props.block;
+          options = _props.options;
 
       var selected = options.find(function (option) {
         return option.selected;
@@ -70,14 +69,14 @@ var DropDownSelect = function (_React$Component) {
         { isOpen: this.state.dropdownOpen, toggle: this.toggle },
         _react2.default.createElement(
           _reactstrap.DropdownToggle,
-          { block: block, color: selected.color },
+          { color: selected.color },
           _react2.default.createElement('i', { className: 'fa fa-refresh' }),
           ' ',
           selected ? selected.caption : ''
         ),
         _react2.default.createElement(
           _reactstrap.DropdownMenu,
-          { right: right },
+          { caret: true, right: right },
           options.map(function (o) {
             return _react2.default.createElement(
               _reactstrap.DropdownItem,
@@ -95,7 +94,6 @@ var DropDownSelect = function (_React$Component) {
 
 DropDownSelect.propTypes = {
   right: _propTypes2.default.bool,
-  block: _propTypes2.default.bool,
   icon: _propTypes2.default.string,
   onChange: _propTypes2.default.func,
   options: _propTypes2.default.array

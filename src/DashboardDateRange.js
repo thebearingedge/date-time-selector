@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {Button, ButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle, ButtonGroup} from 'reactstrap'
 import DateTimeRangeSelector from './DateTimeRangeSelector'
 import RefreshRateDropDown from './RefreshRateDropDown'
 import CommonRangesDropDown from './CommonRangesDropDown'
@@ -81,8 +82,10 @@ export default class DashboardDateRange extends React.Component {
 
     return (
       <DateTimeRangeSelector from={from} to={to} onChange={this.handleRangeChange}>
-        <CommonRangesDropDown onChange={this.handleCommonRangeSelected} />
-        <RefreshRateDropDown onChange={this.handleRefreshRateChange} />
+        <ButtonGroup>
+          <RefreshRateDropDown onChange={this.handleRefreshRateChange} />
+          <CommonRangesDropDown onChange={this.handleCommonRangeSelected} />
+        </ButtonGroup>
       </DateTimeRangeSelector>
     )
   }

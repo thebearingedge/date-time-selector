@@ -59,11 +59,9 @@ export default class DateTimeRangeSelector extends React.Component {
 
   render () {
     const {from, to} = this.state
-    // const [children0 = [], children1 = [], ...childrenOther] = this.props.children
-    // const {childs} = this.props.children
 
     return (
-      <div>
+      <div className='container'>
         <div className='form-group'>
           <DateTimeSelector
             value={from ? from.text : ''}
@@ -74,10 +72,9 @@ export default class DateTimeRangeSelector extends React.Component {
           <DateTimeSelector
             value={to ? to.text : ''}
             placeholder='To...'
-            onValidDateEntered={this.handleToDateSelected}>
-            {this.props.children}
-          </DateTimeSelector>
+            onValidDateEntered={this.handleToDateSelected} />
         </div>
+        {this.props.children}
       </div>
     )
   }

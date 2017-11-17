@@ -49,7 +49,7 @@ export default class CommonRangesDropDown extends React.Component {
 
     return (
       <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-        <DropdownToggle><i className='fa fa-list' /></DropdownToggle>
+        <DropdownToggle caret><i className='fa fa-list' /></DropdownToggle>
         <DropdownMenu right>
           {options.map(o => {
             return <DropdownItem onClick={this.handleClick} key={o.value} value={o.value}>{o.caption}</DropdownItem>

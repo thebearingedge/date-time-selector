@@ -75,7 +75,7 @@ var CommonRangesDropDown = function (_React$Component) {
         { isOpen: this.state.dropdownOpen, toggle: this.toggle },
         _react2.default.createElement(
           _reactstrap.DropdownToggle,
-          null,
+          { caret: true },
           _react2.default.createElement('i', { className: 'fa fa-list' })
         ),
         _react2.default.createElement(

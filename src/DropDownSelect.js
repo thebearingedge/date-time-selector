@@ -10,7 +10,6 @@ export default class DropDownSelect extends React.Component {
 
   static propTypes = {
     right: PropTypes.bool,
-    block: PropTypes.bool,
     icon: PropTypes.string,
     onChange: PropTypes.func,
     options: PropTypes.array
@@ -34,13 +33,13 @@ export default class DropDownSelect extends React.Component {
   }
 
   render () {
-    const { right, options, block } = this.props
+    const { right, options } = this.props
     const selected = options.find(option => option.selected)
 
     return (
-      <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-        <DropdownToggle block={block} color={selected.color}><i className='fa fa-refresh' /> {selected ? selected.caption : ''}</DropdownToggle>
-        <DropdownMenu right={right}>
+      <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} >
+        <DropdownToggle color={selected.color}><i className='fa fa-refresh' /> {selected ? selected.caption : ''}</DropdownToggle>
+        <DropdownMenu caret right={right}>
           {options.map(o => {
             return <DropdownItem onClick={this.handleClick} key={o.value} value={o.value}>{o.caption}</DropdownItem>
           })}

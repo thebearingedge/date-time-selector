@@ -82,12 +82,11 @@ var DateTimeRangeSelector = function (_React$Component) {
       var _state = this.state,
           from = _state.from,
           to = _state.to;
-      // const [children0 = [], children1 = [], ...childrenOther] = this.props.children
-      // const {childs} = this.props.children
+
 
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'container' },
         _react2.default.createElement(
           'div',
           { className: 'form-group' },
@@ -99,15 +98,12 @@ var DateTimeRangeSelector = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'form-group' },
-          _react2.default.createElement(
-            _DateTimeSelector2.default,
-            {
-              value: to ? to.text : '',
-              placeholder: 'To...',
-              onValidDateEntered: this.handleToDateSelected },
-            this.props.children
-          )
-        )
+          _react2.default.createElement(_DateTimeSelector2.default, {
+            value: to ? to.text : '',
+            placeholder: 'To...',
+            onValidDateEntered: this.handleToDateSelected })
+        ),
+        this.props.children
       );
     }
   }]);
