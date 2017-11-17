@@ -111,8 +111,8 @@ var DashboardDateRange = function (_React$Component) {
       return _react2.default.createElement(
         _DateTimeRangeSelector2.default,
         { from: from, to: to, onChange: this.handleRangeChange },
-        _react2.default.createElement(_RefreshRateDropDown2.default, { onChange: this.handleRefreshRateChange }),
-        _react2.default.createElement(_CommonRangesDropDown2.default, { onChange: this.handleCommonRangeSelected })
+        _react2.default.createElement(_CommonRangesDropDown2.default, { onChange: this.handleCommonRangeSelected }),
+        _react2.default.createElement(_RefreshRateDropDown2.default, { onChange: this.handleRefreshRateChange })
       );
     }
   }]);

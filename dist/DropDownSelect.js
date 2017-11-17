@@ -57,6 +57,7 @@ var DropDownSelect = function (_React$Component) {
       var _this2 = this;
 
       var _props = this.props,
+          right = _props.right,
           options = _props.options,
           block = _props.block;
 
@@ -65,7 +66,7 @@ var DropDownSelect = function (_React$Component) {
       });
 
       return _react2.default.createElement(
-        _reactstrap.Dropdown,
+        _reactstrap.ButtonDropdown,
         { isOpen: this.state.dropdownOpen, toggle: this.toggle },
         _react2.default.createElement(
           _reactstrap.DropdownToggle,
@@ -76,7 +77,7 @@ var DropDownSelect = function (_React$Component) {
         ),
         _react2.default.createElement(
           _reactstrap.DropdownMenu,
-          null,
+          { right: right },
           options.map(function (o) {
             return _react2.default.createElement(
               _reactstrap.DropdownItem,
@@ -93,6 +94,7 @@ var DropDownSelect = function (_React$Component) {
 }(_react2.default.Component);
 
 DropDownSelect.propTypes = {
+  right: _propTypes2.default.bool,
   block: _propTypes2.default.bool,
   icon: _propTypes2.default.string,
   onChange: _propTypes2.default.func,

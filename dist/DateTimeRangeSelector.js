@@ -20,8 +20,6 @@ var _DateTimeSelector2 = _interopRequireDefault(_DateTimeSelector);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -84,13 +82,8 @@ var DateTimeRangeSelector = function (_React$Component) {
       var _state = this.state,
           from = _state.from,
           to = _state.to;
-
-      var _props$children = _toArray(this.props.children),
-          _props$children$ = _props$children[0],
-          children0 = _props$children$ === undefined ? [] : _props$children$,
-          _props$children$2 = _props$children[1],
-          children1 = _props$children$2 === undefined ? [] : _props$children$2,
-          childrenOther = _props$children.slice(2);
+      // const [children0 = [], children1 = [], ...childrenOther] = this.props.children
+      // const {childs} = this.props.children
 
       return _react2.default.createElement(
         'div',
@@ -98,14 +91,10 @@ var DateTimeRangeSelector = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'form-group' },
-          _react2.default.createElement(
-            _DateTimeSelector2.default,
-            {
-              value: from ? from.text : '',
-              placeholder: 'From...',
-              onValidDateEntered: this.handleFromDateSelected },
-            children0 && children0
-          )
+          _react2.default.createElement(_DateTimeSelector2.default, {
+            value: from ? from.text : '',
+            placeholder: 'From...',
+            onValidDateEntered: this.handleFromDateSelected })
         ),
         _react2.default.createElement(
           'div',
@@ -116,10 +105,9 @@ var DateTimeRangeSelector = function (_React$Component) {
               value: to ? to.text : '',
               placeholder: 'To...',
               onValidDateEntered: this.handleToDateSelected },
-            children1 && children1
+            this.props.children
           )
-        ),
-        childrenOther && childrenOther
+        )
       );
     }
   }]);

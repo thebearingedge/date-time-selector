@@ -81,8 +81,8 @@ export default class DashboardDateRange extends React.Component {
 
     return (
       <DateTimeRangeSelector from={from} to={to} onChange={this.handleRangeChange}>
-        <RefreshRateDropDown onChange={this.handleRefreshRateChange} />
         <CommonRangesDropDown onChange={this.handleCommonRangeSelected} />
+        <RefreshRateDropDown onChange={this.handleRefreshRateChange} />
       </DateTimeRangeSelector>
     )
   }

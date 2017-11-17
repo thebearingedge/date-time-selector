@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
 export default class CommonRangesDropDown extends React.Component {
 
@@ -48,14 +48,14 @@ export default class CommonRangesDropDown extends React.Component {
     const { options } = this.state
 
     return (
-      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+      <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle><i className='fa fa-list' /></DropdownToggle>
-        <DropdownMenu>
+        <DropdownMenu right>
           {options.map(o => {
             return <DropdownItem onClick={this.handleClick} key={o.value} value={o.value}>{o.caption}</DropdownItem>
           })}
         </DropdownMenu>
-      </Dropdown>
+      </ButtonDropdown>
     )
   }
 }

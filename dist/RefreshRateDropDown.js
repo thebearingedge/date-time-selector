@@ -63,7 +63,7 @@ var RefreshRateDropDown = function (_React$Component) {
       var options = this.state.options;
 
 
-      return _react2.default.createElement(_DropDownSelect2.default, { options: options, onChange: this.handleChange });
+      return _react2.default.createElement(_DropDownSelect2.default, { right: true, options: options, onChange: this.handleChange });
     }
   }]);
 

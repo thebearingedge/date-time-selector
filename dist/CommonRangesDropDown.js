@@ -71,7 +71,7 @@ var CommonRangesDropDown = function (_React$Component) {
 
 
       return _react2.default.createElement(
-        _reactstrap.Dropdown,
+        _reactstrap.ButtonDropdown,
         { isOpen: this.state.dropdownOpen, toggle: this.toggle },
         _react2.default.createElement(
           _reactstrap.DropdownToggle,
@@ -80,7 +80,7 @@ var CommonRangesDropDown = function (_React$Component) {
         ),
         _react2.default.createElement(
           _reactstrap.DropdownMenu,
-          null,
+          { right: true },
           options.map(function (o) {
             return _react2.default.createElement(
               _reactstrap.DropdownItem,

@@ -44,7 +44,7 @@ export default class RefreshRateDropDown extends React.Component {
     const { options } = this.state
 
     return (
-      <DropDownSelect options={options} onChange={this.handleChange} />
+      <DropDownSelect right options={options} onChange={this.handleChange} />
     )
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
 export default class DropDownSelect extends React.Component {
 
@@ -9,6 +9,7 @@ export default class DropDownSelect extends React.Component {
   }
 
   static propTypes = {
+    right: PropTypes.bool,
     block: PropTypes.bool,
     icon: PropTypes.string,
     onChange: PropTypes.func,
@@ -33,18 +34,18 @@ export default class DropDownSelect extends React.Component {
   }
 
   render () {
-    const { options, block } = this.props
+    const { right, options, block } = this.props
     const selected = options.find(option => option.selected)
 
     return (
-      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+      <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
         <DropdownToggle block={block} color={selected.color}><i className='fa fa-refresh' /> {selected ? selected.caption : ''}</DropdownToggle>
-        <DropdownMenu>
+        <DropdownMenu right={right}>
           {options.map(o => {
             return <DropdownItem onClick={this.handleClick} key={o.value} value={o.value}>{o.caption}</DropdownItem>
           })}
         </DropdownMenu>
-      </Dropdown>
+      </ButtonDropdown>
     )
   }
 }
