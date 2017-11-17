@@ -118,14 +118,15 @@ var DateTimeSelector = function (_React$Component) {
           inputValue = _state.inputValue;
 
       var _props = this.props,
+          children = _props.children,
           value = _props.value,
           format = _props.format,
           onValidDateEntered = _props.onValidDateEntered,
-          inputProps = _objectWithoutProperties(_props, ['value', 'format', 'onValidDateEntered']);
+          inputProps = _objectWithoutProperties(_props, ['children', 'value', 'format', 'onValidDateEntered']);
 
       return _react2.default.createElement(
         'div',
-        { className: 'input-group' },
+        null,
         _react2.default.createElement(
           'div',
           { className: 'input-group' },
@@ -137,7 +138,8 @@ var DateTimeSelector = function (_React$Component) {
               'button',
               { onClick: this.handleToggleVisibility, type: 'button', className: 'btn btn-secondary visible' },
               _react2.default.createElement('i', { className: 'fa fa-calendar' })
-            )
+            ),
+            children
           )
         ),
         _react2.default.createElement(_Calendar2.default, { asDropDown: true, visible: showCalendar, value: calendarValue, onSubmit: this.handleCalendarSelection })
@@ -149,11 +151,13 @@ var DateTimeSelector = function (_React$Component) {
 }(_react2.default.Component);
 
 DateTimeSelector.propTypes = {
+  children: _propTypes2.default.node,
   value: _propTypes2.default.string,
   format: _propTypes2.default.string,
   onValidDateEntered: _propTypes2.default.func
 };
 DateTimeSelector.defaultProps = {
+  children: [],
   value: '',
   format: 'L HH:mm:ss',
   onValidDateEntered: null

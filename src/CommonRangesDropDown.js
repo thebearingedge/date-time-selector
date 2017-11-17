@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import DropDownSelect from './DropDownSelect'
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
 export default class CommonRangesDropDown extends React.Component {
 
   state = {
+    dropdownOpen: false,
     options: [
        { value: 'today|now', caption: 'Today so far', selected: true, color: 'secondary' },
        { value: 'today|today+1d', caption: 'Today', selected: true, color: 'secondary' },
@@ -17,10 +18,19 @@ export default class CommonRangesDropDown extends React.Component {
   }
 
   static defaultProps = {
-    onChange: null
+    onChange: null,
+    options: []
   }
 
-  handleChange = (value) => {
+  toggle = () => {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    })
+  }
+
+  handleClick = (e) => {
+    const value = e.target.value
+
     this.setState({
       options: this.state.options.map(d => {
         d.selected = d.value === value
@@ -38,7 +48,14 @@ export default class CommonRangesDropDown extends React.Component {
     const { options } = this.state
 
     return (
-      <DropDownSelect options={options} onChange={this.handleChange} />
+      <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+        <DropdownToggle><i className='fa fa-list' /></DropdownToggle>
+        <DropdownMenu>
+          {options.map(o => {
+            return <DropdownItem onClick={this.handleClick} key={o.value} value={o.value}>{o.caption}</DropdownItem>
+          })}
+        </DropdownMenu>
+      </Dropdown>
     )
   }
 }

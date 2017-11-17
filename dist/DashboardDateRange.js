@@ -64,7 +64,6 @@ var DashboardDateRange = function (_React$Component) {
             var arg = _this.state.range;
 
             if (arg) {
-
               if (arg.from && arg.from.moment) {
                 arg.from.live = (0, _dateTimeParser.parseDateTime)(arg.from.text);
               }
@@ -73,7 +72,6 @@ var DashboardDateRange = function (_React$Component) {
                 arg.to.live = (0, _dateTimeParser.parseDateTime)(arg.to.text);
               }
             }
-            console.log('arg', arg);
             _this.props.onRangeChange(arg);
           }, _this.state.rate);
         }
@@ -111,19 +109,10 @@ var DashboardDateRange = function (_React$Component) {
 
 
       return _react2.default.createElement(
-        'div',
-        { className: 'row' },
-        _react2.default.createElement(
-          'div',
-          { className: 'col-sm-10' },
-          _react2.default.createElement(_DateTimeRangeSelector2.default, { from: from, to: to, onChange: this.handleRangeChange })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'col-sm-2' },
-          _react2.default.createElement(_RefreshRateDropDown2.default, { onChange: this.handleRefreshRateChange }),
-          _react2.default.createElement(_CommonRangesDropDown2.default, { onChange: this.handleCommonRangeSelected })
-        )
+        _DateTimeRangeSelector2.default,
+        { from: from, to: to, onChange: this.handleRangeChange },
+        _react2.default.createElement(_RefreshRateDropDown2.default, { onChange: this.handleRefreshRateChange }),
+        _react2.default.createElement(_CommonRangesDropDown2.default, { onChange: this.handleCommonRangeSelected })
       );
     }
   }]);

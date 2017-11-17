@@ -14,9 +14,7 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _DropDownSelect = require('./DropDownSelect');
-
-var _DropDownSelect2 = _interopRequireDefault(_DropDownSelect);
+var _reactstrap = require('reactstrap');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41,8 +39,15 @@ var CommonRangesDropDown = function (_React$Component) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CommonRangesDropDown.__proto__ || Object.getPrototypeOf(CommonRangesDropDown)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      dropdownOpen: false,
       options: [{ value: 'today|now', caption: 'Today so far', selected: true, color: 'secondary' }, { value: 'today|today+1d', caption: 'Today', selected: true, color: 'secondary' }, { value: 'today-1d|today', caption: 'Yesterday', selected: true, color: 'secondary' }]
-    }, _this.handleChange = function (value) {
+    }, _this.toggle = function () {
+      _this.setState({
+        dropdownOpen: !_this.state.dropdownOpen
+      });
+    }, _this.handleClick = function (e) {
+      var value = e.target.value;
+
       _this.setState({
         options: _this.state.options.map(function (d) {
           d.selected = d.value === value;
@@ -60,10 +65,31 @@ var CommonRangesDropDown = function (_React$Component) {
   _createClass(CommonRangesDropDown, [{
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var options = this.state.options;
 
 
-      return _react2.default.createElement(_DropDownSelect2.default, { options: options, onChange: this.handleChange });
+      return _react2.default.createElement(
+        _reactstrap.Dropdown,
+        { isOpen: this.state.dropdownOpen, toggle: this.toggle },
+        _react2.default.createElement(
+          _reactstrap.DropdownToggle,
+          null,
+          _react2.default.createElement('i', { className: 'fa fa-list' })
+        ),
+        _react2.default.createElement(
+          _reactstrap.DropdownMenu,
+          null,
+          options.map(function (o) {
+            return _react2.default.createElement(
+              _reactstrap.DropdownItem,
+              { onClick: _this2.handleClick, key: o.value, value: o.value },
+              o.caption
+            );
+          })
+        )
+      );
     }
   }]);
 
@@ -74,6 +100,7 @@ CommonRangesDropDown.propTypes = {
   onChange: _propTypes2.default.func
 };
 CommonRangesDropDown.defaultProps = {
-  onChange: null
+  onChange: null,
+  options: []
 };
 exports.default = CommonRangesDropDown;
