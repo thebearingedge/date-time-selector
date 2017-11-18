@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Calendar from './Calendar'
+import { Button, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, InputGroup, InputGroupButton, Input } from 'reactstrap'
 import { parseDateTime } from 'date-time-parser'
 
 export default class DateTimeSelector extends React.Component {
@@ -16,67 +17,49 @@ export default class DateTimeSelector extends React.Component {
     children: PropTypes.node,
     value: PropTypes.string,
     format: PropTypes.string,
-    onValidDateEntered: PropTypes.func
+    onDateChanged: PropTypes.func
   }
 
   static defaultProps = {
     children: [],
     value: '',
     format: 'L HH:mm:ss',
-    onValidDateEntered: null
+    onDateChanged: null
   }
 
   componentDidMount () {
-    const mo = parseDateTime(this.props.value)
-    this.setState({
-      inputValue: this.props.value,
-      isValidDate: mo !== null,
-      calendarValue: mo
-    }, () => {
-      if (this.props.onValidDateEntered) {
-        this.props.onValidDateEntered(mo)
-      }
-    })
+    this.update(this.props.value, parseDateTime(this.props.value))
   }
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.value !== this.props.value) {
-      this.updateDate(nextProps.value)
+      this.update(nextProps.value, parseDateTime(nextProps.value))
     }
   }
 
-  updateDate (input) {
-    const mo = parseDateTime(input)
-
+  update (input, mo) {
     this.setState({
       inputValue: input,
+      moment: mo,
       isValidDate: mo !== null,
       calendarValue: mo
     }, () => {
-      if (this.props.onValidDateEntered) {
-        this.props.onValidDateEntered({ moment: mo, text: this.state.inputValue })
+      if (this.props.onDateChanged) {
+        this.props.onDateChanged({ moment: this.state.moment, text: this.state.inputValue })
       }
     })
   }
 
-  handleToggleVisibility = () => {
+  handleToggleCalendar = () => {
     this.setState({ showCalendar: !this.state.showCalendar })
   }
 
   handleTextboxChange = (e) => {
-    this.updateDate(e.target.value)
+    this.update(e.target.value, parseDateTime(e.target.value))
   }
 
   handleCalendarSelection = (mo) => {
-    this.setState({
-      showCalendar: false,
-      isValidDate: mo !== null,
-      inputValue: mo ? mo.format(this.props.format) : ''
-    }, () => {
-      if (this.props.onValidDateEntered) {
-        this.props.onValidDateEntered({ moment: mo, text: this.state.inputValue })
-      }
-    })
+    this.update(mo ? mo.format(this.props.format) : '', mo)
   }
 
   render () {
@@ -85,16 +68,19 @@ export default class DateTimeSelector extends React.Component {
 
     return (
       <div>
-        <div className='input-group'>
-          <input type='text' className={`form-control ${isValidDate ? '' : 'text-danger'}`} onChange={this.handleTextboxChange} value={inputValue} placeholder='Date/time...' {...inputProps} />
-          <div className='input-group-btn'>
-            <button onClick={this.handleToggleVisibility} type='button' className={`btn btn-secondary visible`}>
+        <InputGroup>
+          <Input
+            className={`${isValidDate ? '' : 'text-danger'}`}
+            value={inputValue}
+            onChange={this.handleTextboxChange}
+          />
+          <InputGroupButton>
+            <Button onClick={this.handleToggleCalendar} >
               <i className='fa fa-calendar' />
-            </button>
-          </div>
-          {children}
-        </div>
-        <Calendar asDropDown visible={showCalendar} value={calendarValue} onSubmit={this.handleCalendarSelection} />
+            </Button>
+            <Calendar asDropDown visible={showCalendar} value={calendarValue} onSubmit={this.handleCalendarSelection} />
+          </InputGroupButton>
+        </InputGroup>
       </div>
     )
   }

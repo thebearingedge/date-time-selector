@@ -69,12 +69,10 @@ var DateTimeRangeSelector = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      if (nextProps.from !== this.props.from || nextProps.to !== this.props.to) {
-        this.setState({
-          from: { mo: null, text: nextProps.from },
-          to: { mo: null, text: nextProps.to }
-        });
-      }
+      this.setState({
+        from: { mo: null, text: nextProps.from },
+        to: { mo: null, text: nextProps.to }
+      });
     }
   }, {
     key: 'render',

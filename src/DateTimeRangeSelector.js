@@ -31,12 +31,10 @@ export default class DateTimeRangeSelector extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.from !== this.props.from || nextProps.to !== this.props.to) {
-      this.setState({
-        from: { mo: null, text: nextProps.from },
-        to: { mo: null, text: nextProps.to }
-      })
-    }
+    this.setState({
+      from: { mo: null, text: nextProps.from },
+      to: { mo: null, text: nextProps.to }
+    })
   }
 
   handleFromDateSelected = (selected) => {

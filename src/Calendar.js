@@ -216,7 +216,7 @@ export default class Calendar extends React.Component {
     }
 
     const css = !visible ? 'd-none ' : asDropDown ? ' position-absolute' : ' '
-    const styles = !asDropDown ? { width: '18em' } : { zIndex: 999, right: '0px', top: '40px', width: '18em' }
+    const styles = !asDropDown ? { width: '300px' } : { zIndex: 999, right: '0px', top: '40px', width: '300px' }
 
     return (
       <div className={`picker card ${css}`} style={styles}>

@@ -38,8 +38,8 @@ export default class DropDownSelect extends React.Component {
 
     return (
       <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle} >
-        <DropdownToggle color={selected.color}><i className='fa fa-refresh' /> {selected ? selected.caption : ''}</DropdownToggle>
-        <DropdownMenu caret right={right}>
+        <DropdownToggle caret color={selected.color}><i className='fa fa-refresh' /> {selected ? selected.caption : ''}</DropdownToggle>
+        <DropdownMenu right={right}>
           {options.map(o => {
             return <DropdownItem onClick={this.handleClick} key={o.value} value={o.value}>{o.caption}</DropdownItem>
           })}
