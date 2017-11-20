@@ -262,15 +262,12 @@ export default class Calendar extends React.Component {
 const HeadButton = ({ onClick, icon, text }) =>
   <button type='button' className='btn btn-sm btn-secondary' onClick={onClick}><i className={`fa fa-${icon}`} /> {text}</button>
 
-const TimeInput = (props) => {
-  return (
-    <input type='text' className='form-control form-control-sm w-25'
-      onFocus={(e) => e.target.select()}
-      {...props} />
-  )
-}
+const TimeInput = (props) =>
+  <input type='text' className='form-control form-control-sm w-25'
+    onFocus={(e) => e.target.select()}
+    {...props} />
 
-const DayGrid = ({ dow = [], days, onClick }) => (
+const DayGrid = ({ dow = [], days, onClick }) =>
   <Grid data={days} format='D' width={13} onClick={onClick}>
     <Row>
       {dow.map((d, i) => {
@@ -278,24 +275,21 @@ const DayGrid = ({ dow = [], days, onClick }) => (
       })}
     </Row>
   </Grid>
-)
 
-const Grid = ({ data, format, onClick, width, children }) => (
+const Grid = ({ data, format, onClick, width, children }) =>
   <div className='card-body p-2'>
     {children}
     {data.map((d, i) => {
       return <GridRow key={i} dates={d} format={format} onClick={onClick} width={width} />
     })}
   </div>
-)
 
-const GridRow = ({ dates, format, width, onClick }) => (
+const GridRow = ({ dates, format, width, onClick }) =>
   <Row>
     {dates.map(function (d, i) {
       return <GridButton key={d.m.unix()} date={d} format={format} onClick={onClick} width={width} />
     })}
   </Row>
-)
 
 const GridButton = ({ date, format, disabled, onClick, width }) => {
   let c = 'py-1 px-0 btn btn-sm text-center '

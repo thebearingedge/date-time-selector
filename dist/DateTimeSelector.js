@@ -24,8 +24,6 @@ var _dateTimeParser = require('date-time-parser');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -47,62 +45,36 @@ var DateTimeSelector = function (_React$Component) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DateTimeSelector.__proto__ || Object.getPrototypeOf(DateTimeSelector)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      showCalendar: false,
+      moment: null,
       isValidDate: true,
-      inputValue: '',
-      calendarValue: null
+      isCalendarVisible: false
+    }, _this.handleChange = function (e) {
+      var mo = (0, _dateTimeParser.parseDateTime)(e.target.value);
+
+      _this.setState({ isValid: mo, moment: mo });
+
+      if (_this.props.onChange) {
+        _this.props.onChange({ value: e.target.value, moment: mo });
+      }
     }, _this.handleToggleCalendar = function () {
-      _this.setState({ showCalendar: !_this.state.showCalendar });
-    }, _this.handleTextboxChange = function (e) {
-      _this.update(e.target.value, (0, _dateTimeParser.parseDateTime)(e.target.value));
+      _this.setState({ isCalendarVisible: !_this.state.isCalendarVisible });
     }, _this.handleCalendarSelection = function (mo) {
-      _this.update(mo ? mo.format(_this.props.format) : '', mo);
+      _this.setState({ isCalendarVisible: false, isValid: mo }, function () {
+        if (_this.props.onChange) {
+          _this.props.onChange({ value: mo ? mo.format('L HH:mm:ss') : '', moment: mo });
+        }
+      });
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(DateTimeSelector, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.update(this.props.value, (0, _dateTimeParser.parseDateTime)(this.props.value));
-    }
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if (nextProps.value !== this.props.value) {
-        this.update(nextProps.value, (0, _dateTimeParser.parseDateTime)(nextProps.value));
-      }
-    }
-  }, {
-    key: 'update',
-    value: function update(input, mo) {
-      var _this2 = this;
-
-      this.setState({
-        inputValue: input,
-        moment: mo,
-        isValidDate: mo !== null,
-        calendarValue: mo
-      }, function () {
-        if (_this2.props.onDateChanged) {
-          _this2.props.onDateChanged({ moment: _this2.state.moment, text: _this2.state.inputValue });
-        }
-      });
-    }
-  }, {
     key: 'render',
     value: function render() {
       var _state = this.state,
-          isValidDate = _state.isValidDate,
-          showCalendar = _state.showCalendar,
-          calendarValue = _state.calendarValue,
-          inputValue = _state.inputValue;
+          isValid = _state.isValid,
+          isCalendarVisible = _state.isCalendarVisible,
+          moment = _state.moment;
 
-      var _props = this.props,
-          children = _props.children,
-          value = _props.value,
-          format = _props.format,
-          onValidDateEntered = _props.onValidDateEntered,
-          inputProps = _objectWithoutProperties(_props, ['children', 'value', 'format', 'onValidDateEntered']);
 
       return _react2.default.createElement(
         'div',
@@ -111,10 +83,9 @@ var DateTimeSelector = function (_React$Component) {
           _reactstrap.InputGroup,
           null,
           _react2.default.createElement(_reactstrap.Input, {
-            className: '' + (isValidDate ? '' : 'text-danger'),
-            value: inputValue,
-            onChange: this.handleTextboxChange
-          }),
+            className: '' + (isValid ? '' : 'text-danger'),
+            value: this.props.value,
+            onChange: this.handleChange }),
           _react2.default.createElement(
             _reactstrap.InputGroupButton,
             null,
@@ -123,7 +94,7 @@ var DateTimeSelector = function (_React$Component) {
               { onClick: this.handleToggleCalendar },
               _react2.default.createElement('i', { className: 'fa fa-calendar' })
             ),
-            _react2.default.createElement(_Calendar2.default, { asDropDown: true, visible: showCalendar, value: calendarValue, onSubmit: this.handleCalendarSelection })
+            _react2.default.createElement(_Calendar2.default, { asDropDown: true, visible: isCalendarVisible, value: moment, onSubmit: this.handleCalendarSelection })
           )
         )
       );
@@ -134,15 +105,11 @@ var DateTimeSelector = function (_React$Component) {
 }(_react2.default.Component);
 
 DateTimeSelector.propTypes = {
-  children: _propTypes2.default.node,
   value: _propTypes2.default.string,
-  format: _propTypes2.default.string,
-  onDateChanged: _propTypes2.default.func
+  onChange: _propTypes2.default.func
 };
 DateTimeSelector.defaultProps = {
-  children: [],
   value: '',
-  format: 'L HH:mm:ss',
-  onDateChanged: null
+  onChange: null
 };
 exports.default = DateTimeSelector;

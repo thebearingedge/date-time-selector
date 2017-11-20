@@ -17,7 +17,7 @@ export default class CommonRangesDropDown extends React.Component {
        { value: 'today-5y|today', caption: 'Last 5 years', selected: true, color: 'secondary' },
        { value: 'today-1d|today', caption: 'Yesterday', selected: true, color: 'secondary' },
        { value: 'today-2d|today-1d', caption: 'Day before yesterday', selected: true, color: 'secondary' },
-       { value: 'today-8d|today-7d', caption: 'This day last week', selected: true, color: 'secondary' },
+       { value: 'today-8d|today-7d', caption: 'This day last week', selected: true, color: 'secondary' }
       //  { value: 'today|now', caption: 'Previous week', selected: true, color: 'secondary' },
       //  { value: 'today|now', caption: 'Previous month', selected: true, color: 'secondary' },
       //  { value: 'today|now', caption: 'Previous year', selected: true, color: 'secondary' },

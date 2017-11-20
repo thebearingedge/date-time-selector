@@ -41,65 +41,36 @@ var DateTimeRangeSelector = function (_React$Component) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DateTimeRangeSelector.__proto__ || Object.getPrototypeOf(DateTimeRangeSelector)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      from: { mo: null, text: '' },
-      to: { mo: null, text: '' }
-    }, _this.handleFromDateSelected = function (selected) {
-      _this.setState({ from: selected }, function () {
-        if (_this.props.onChange) {
-          _this.props.onChange({ from: _this.state.from, to: _this.state.to });
-        }
+      isValidDate: true,
+      isCalendarVisible: false
+    }, _this.handleUpdateFrom = function (e) {
+      _this.props.onUpdated({
+        to: _this.props.to,
+        from: e.value
       });
-    }, _this.handleToDateSelected = function (selected) {
-      _this.setState({ to: selected }, function () {
-        if (_this.props.onChange) {
-          _this.props.onChange({ from: _this.state.from, to: _this.state.to });
-        }
+    }, _this.handleUpdateTo = function (e) {
+      _this.props.onUpdated({
+        from: _this.props.from,
+        to: e.value
       });
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(DateTimeRangeSelector, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.setState({
-        from: { mo: null, text: this.props.from },
-        to: { mo: null, text: this.props.to }
-      });
-    }
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      this.setState({
-        from: { mo: null, text: nextProps.from },
-        to: { mo: null, text: nextProps.to }
-      });
-    }
-  }, {
     key: 'render',
     value: function render() {
-      var _state = this.state,
-          from = _state.from,
-          to = _state.to;
-
-
       return _react2.default.createElement(
         'div',
         { className: 'container' },
         _react2.default.createElement(
           'div',
           { className: 'form-group' },
-          _react2.default.createElement(_DateTimeSelector2.default, {
-            value: from ? from.text : '',
-            placeholder: 'From...',
-            onValidDateEntered: this.handleFromDateSelected })
+          _react2.default.createElement(_DateTimeSelector2.default, { value: this.props.from, onChange: this.handleUpdateFrom })
         ),
         _react2.default.createElement(
           'div',
           { className: 'form-group' },
-          _react2.default.createElement(_DateTimeSelector2.default, {
-            value: to ? to.text : '',
-            placeholder: 'To...',
-            onValidDateEntered: this.handleToDateSelected })
+          _react2.default.createElement(_DateTimeSelector2.default, { value: this.props.to, onChange: this.handleUpdateTo })
         ),
         this.props.children
       );
@@ -111,14 +82,14 @@ var DateTimeRangeSelector = function (_React$Component) {
 
 DateTimeRangeSelector.propTypes = {
   children: _propTypes2.default.node,
-  onChange: _propTypes2.default.func,
   from: _propTypes2.default.string,
-  to: _propTypes2.default.string
+  to: _propTypes2.default.string,
+  onUpdated: _propTypes2.default.func
 };
 DateTimeRangeSelector.defaultProps = {
   children: [],
-  onChange: null,
   from: '',
-  to: ''
+  to: '',
+  onUpdated: null
 };
 exports.default = DateTimeRangeSelector;
