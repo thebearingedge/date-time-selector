@@ -58,7 +58,7 @@ export default class DateTimeSelector extends React.Component {
     const { isValid, isCalendarVisible, moment } = this.state
 
     return (
-      <div>
+      <div className='position-relative'>
         <InputGroup>
           <Input
             className={`${isValid ? '' : 'text-danger'}`}

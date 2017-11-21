@@ -90,7 +90,7 @@ var DateTimeSelector = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'position-relative' },
         _react2.default.createElement(
           _reactstrap.InputGroup,
           null,

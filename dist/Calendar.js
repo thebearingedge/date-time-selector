@@ -219,7 +219,7 @@ var Calendar = function (_React$Component) {
       };
 
       var css = !visible ? 'd-none ' : asDropDown ? ' position-absolute' : ' ';
-      var styles = !asDropDown ? { width: '300px' } : { zIndex: 999, right: '29px', width: '300px' };
+      var styles = !asDropDown ? { width: '300px' } : { zIndex: 999, right: '0px', width: '300px' };
 
       return _react2.default.createElement(
         'div',
