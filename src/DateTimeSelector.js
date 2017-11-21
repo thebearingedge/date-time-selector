@@ -22,13 +22,23 @@ export default class DateTimeSelector extends React.Component {
     onChange: null
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.value !== this.props.value) {
+      this.update(nextProps.value)
+    }
+  }
+
   handleChange = (e) => {
-    const mo = parseDateTime(e.target.value)
+    this.update(e.target.value)
+  }
+
+  update (input) {
+    const mo = parseDateTime(input)
 
     this.setState({ isValid: mo, moment: mo })
 
     if (this.props.onChange) {
-      this.props.onChange({value: e.target.value, moment: mo})
+      this.props.onChange({value: input, moment: mo})
     }
   }
 

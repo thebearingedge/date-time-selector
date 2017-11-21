@@ -49,13 +49,7 @@ var DateTimeSelector = function (_React$Component) {
       isValidDate: true,
       isCalendarVisible: false
     }, _this.handleChange = function (e) {
-      var mo = (0, _dateTimeParser.parseDateTime)(e.target.value);
-
-      _this.setState({ isValid: mo, moment: mo });
-
-      if (_this.props.onChange) {
-        _this.props.onChange({ value: e.target.value, moment: mo });
-      }
+      _this.update(e.target.value);
     }, _this.handleToggleCalendar = function () {
       _this.setState({ isCalendarVisible: !_this.state.isCalendarVisible });
     }, _this.handleCalendarSelection = function (mo) {
@@ -68,6 +62,24 @@ var DateTimeSelector = function (_React$Component) {
   }
 
   _createClass(DateTimeSelector, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.value !== this.props.value) {
+        this.update(nextProps.value);
+      }
+    }
+  }, {
+    key: 'update',
+    value: function update(input) {
+      var mo = (0, _dateTimeParser.parseDateTime)(input);
+
+      this.setState({ isValid: mo, moment: mo });
+
+      if (this.props.onChange) {
+        this.props.onChange({ value: input, moment: mo });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _state = this.state,
