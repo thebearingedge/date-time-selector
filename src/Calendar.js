@@ -41,7 +41,7 @@ export default class Calendar extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.value !== this.state.selection) {
-      this.setState({selection: nextProps.value})
+      this.setState({ selection: nextProps.value, page: nextProps.value === null ? moment() : nextProps.value })
     }
 
     if (nextProps.visible !== this.props.visible) {

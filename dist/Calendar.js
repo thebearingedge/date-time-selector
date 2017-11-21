@@ -176,7 +176,7 @@ var Calendar = function (_React$Component) {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       if (nextProps.value !== this.state.selection) {
-        this.setState({ selection: nextProps.value });
+        this.setState({ selection: nextProps.value, page: nextProps.value === null ? (0, _moment2.default)() : nextProps.value });
       }
 
       if (nextProps.visible !== this.props.visible) {
