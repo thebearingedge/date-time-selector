@@ -58,9 +58,9 @@ export default class DateTimeSelector extends React.Component {
             <Button onClick={this.handleToggleCalendar} >
               <i className='fa fa-calendar' />
             </Button>
-            <Calendar asDropDown visible={isCalendarVisible} value={moment} onSubmit={this.handleCalendarSelection} />
           </InputGroupButton>
         </InputGroup>
+        <Calendar asDropDown visible={isCalendarVisible} value={moment} onSubmit={this.handleCalendarSelection} />
       </div>
     )
   }

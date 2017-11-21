@@ -175,8 +175,12 @@ var Calendar = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
+      var _this3 = this;
+
       if (nextProps.value !== this.state.selection) {
-        this.setState({ selection: nextProps.value, page: nextProps.value === null ? (0, _moment2.default)() : nextProps.value });
+        this.setState({ selection: nextProps.value, page: nextProps.value === null ? (0, _moment2.default)() : nextProps.value }, function () {
+          _this3.updatePage(_this3.state.selection ? _this3.state.selection : _this3.state.page, _this3.state.selection, 'D');
+        });
       }
 
       if (nextProps.visible !== this.props.visible) {
@@ -188,7 +192,7 @@ var Calendar = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var _state = this.state,
           dow = _state.dow,
@@ -215,9 +219,10 @@ var Calendar = function (_React$Component) {
       };
 
       var css = !visible ? 'd-none ' : asDropDown ? ' position-absolute' : ' ';
-      var styles = !asDropDown ? { width: '300px' } : { zIndex: 999, right: '0px', top: '40px', width: '300px' };
+      var styles = !asDropDown ? { width: '300px' } : { zIndex: 999, right: '29px', top: '70px', width: '300px'
 
-      return _react2.default.createElement(
+        // <DayGrid dow={dow} days={days} onClick={this.handleDateSelected} />
+      };return _react2.default.createElement(
         'div',
         { className: 'picker card ' + css, style: styles },
         _react2.default.createElement(
@@ -227,20 +232,24 @@ var Calendar = function (_React$Component) {
             ButtonGroup,
             null,
             _react2.default.createElement(HeadButton, { onClick: function onClick() {
-                return _this3.handleToggleView('M');
+                return _this4.handleToggleView('M');
               }, text: page.format('MMMM') })
           ),
           _react2.default.createElement(
             ButtonGroup,
             null,
             _react2.default.createElement(HeadButton, { onClick: function onClick() {
-                return _this3.handleToggleView('Y');
+                return _this4.handleToggleView('Y');
               }, text: page.year() }),
             _react2.default.createElement(HeadButton, { onClick: this.handleClickPrevious, icon: 'arrow-left' }),
             _react2.default.createElement(HeadButton, { onClick: this.handleClickNext, icon: 'arrow-right' })
           )
         ),
-        view === 'D' && _react2.default.createElement(DayGrid, { dow: dow, days: days, onClick: this.handleDateSelected }),
+        view === 'D' && _react2.default.createElement(
+          Grid,
+          { data: days, format: 'D', width: 13, onClick: this.handleDateSelected },
+          _react2.default.createElement(DowHeader, { dow: dow })
+        ),
         view === 'M' && _react2.default.createElement(Grid, { data: months, format: 'MMM', width: 24, onClick: this.handleMonthSelected }),
         view === 'Y' && _react2.default.createElement(Grid, { data: years, format: 'YYYY', width: 24, onClick: this.handleYearSelected }),
         !disableTime && _react2.default.createElement(
@@ -317,7 +326,7 @@ Calendar.defaultProps = {
   visible: false,
   value: null,
   disableTime: false,
-  format: 'L HH:mm:s',
+  format: 'L HH:mm:ss',
   onSubmit: null,
   asDropDown: false
 };
@@ -345,33 +354,29 @@ var TimeInput = function TimeInput(props) {
   }, props));
 };
 
-var DayGrid = function DayGrid(_ref3) {
+var DowHeader = function DowHeader(_ref3) {
   var _ref3$dow = _ref3.dow,
       dow = _ref3$dow === undefined ? [] : _ref3$dow,
       days = _ref3.days,
       onClick = _ref3.onClick;
   return _react2.default.createElement(
-    Grid,
-    { data: days, format: 'D', width: 13, onClick: onClick },
-    _react2.default.createElement(
-      Row,
-      null,
-      dow.map(function (d, i) {
-        return _react2.default.createElement(
-          'div',
-          { key: d, className: 'px-0 py-0 m-0 text-center', style: { width: '13%' } },
+    Row,
+    null,
+    dow.map(function (d, i) {
+      return _react2.default.createElement(
+        'div',
+        { key: d, className: 'px-0 py-0 m-0 text-center', style: { width: '13%' } },
+        _react2.default.createElement(
+          'small',
+          null,
           _react2.default.createElement(
-            'small',
+            'strong',
             null,
-            _react2.default.createElement(
-              'strong',
-              null,
-              d
-            )
+            d
           )
-        );
-      })
-    )
+        )
+      );
+    })
   );
 };
 
@@ -383,7 +388,7 @@ var Grid = function Grid(_ref4) {
       children = _ref4.children;
   return _react2.default.createElement(
     'div',
-    { className: 'card-body p-2' },
+    { className: 'card-body pt-1 pl-2 pr-2 pb-1' },
     children,
     data.map(function (d, i) {
       return _react2.default.createElement(GridRow, { key: i, dates: d, format: format, onClick: onClick, width: width });

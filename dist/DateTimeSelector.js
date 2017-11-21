@@ -93,10 +93,10 @@ var DateTimeSelector = function (_React$Component) {
               _reactstrap.Button,
               { onClick: this.handleToggleCalendar },
               _react2.default.createElement('i', { className: 'fa fa-calendar' })
-            ),
-            _react2.default.createElement(_Calendar2.default, { asDropDown: true, visible: isCalendarVisible, value: moment, onSubmit: this.handleCalendarSelection })
+            )
           )
-        )
+        ),
+        _react2.default.createElement(_Calendar2.default, { asDropDown: true, visible: isCalendarVisible, value: moment, onSubmit: this.handleCalendarSelection })
       );
     }
   }]);
