@@ -26,22 +26,24 @@ export default class Calendar extends React.Component {
     visible: false,
     value: null,
     disableTime: false,
-    format: 'L HH:mm:s',
+    format: 'L HH:mm:ss',
     onSubmit: null,
     asDropDown: false
   }
 
-  componentWillMount () {
-    this.setState({selection: this.props.value}, () => {
+  componentWillMount() {
+    this.setState({ selection: this.props.value }, () => {
       if (this.props.visible) {
         this.updatePage(this.state.selection ? this.state.selection : this.state.page, this.state.selection, 'D')
       }
     })
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.state.selection) {
-      this.setState({ selection: nextProps.value, page: nextProps.value === null ? moment() : nextProps.value })
+      this.setState({ selection: nextProps.value, page: nextProps.value === null ? moment() : nextProps.value }, () => {
+        this.updatePage(this.state.selection ? this.state.selection : this.state.page, this.state.selection, 'D')
+      })
     }
 
     if (nextProps.visible !== this.props.visible) {
@@ -202,7 +204,7 @@ export default class Calendar extends React.Component {
     }
   }
 
-  render () {
+  render() {
     const { dow, view, page, days, months, years, selection } = this.state
     const { asDropDown, visible, format, disableTime } = this.props
 
@@ -218,6 +220,7 @@ export default class Calendar extends React.Component {
     const css = !visible ? 'd-none ' : asDropDown ? ' position-absolute' : ' '
     const styles = !asDropDown ? { width: '300px' } : { zIndex: 999, right: '0px', top: '40px', width: '300px' }
 
+    // <DayGrid dow={dow} days={days} onClick={this.handleDateSelected} />
     return (
       <div className={`picker card ${css}`} style={styles}>
         <div className='card-header py-0 px-0 d-flex justify-content-between bg-secondary'>
@@ -232,7 +235,7 @@ export default class Calendar extends React.Component {
           </ButtonGroup>
         </div>
 
-        {view === 'D' && <DayGrid dow={dow} days={days} onClick={this.handleDateSelected} />}
+        {view === 'D' && <Grid data={days} format='D' width={13} onClick={this.handleDateSelected}><DowHeader dow={dow} /></Grid>}
         {view === 'M' && <Grid data={months} format='MMM' width={24} onClick={this.handleMonthSelected} />}
         {view === 'Y' && <Grid data={years} format='YYYY' width={24} onClick={this.handleYearSelected} />}
 
@@ -267,17 +270,15 @@ const TimeInput = (props) =>
     onFocus={(e) => e.target.select()}
     {...props} />
 
-const DayGrid = ({ dow = [], days, onClick }) =>
-  <Grid data={days} format='D' width={13} onClick={onClick}>
-    <Row>
-      {dow.map((d, i) => {
-        return <div key={d} className='px-0 py-0 m-0 text-center' style={{ width: '13%' }}><small><strong>{d}</strong></small></div>
-      })}
-    </Row>
-  </Grid>
+const DowHeader = ({ dow = [], days, onClick }) =>
+  <Row>
+    {dow.map((d, i) => {
+      return <div key={d} className='px-0 py-0 m-0 text-center' style={{ width: '13%' }}><small><strong>{d}</strong></small></div>
+    })}
+  </Row>
 
 const Grid = ({ data, format, onClick, width, children }) =>
-  <div className='card-body p-2'>
+  <div className='card-body pt-1 pl-2 pr-2 pb-1'>
     {children}
     {data.map((d, i) => {
       return <GridRow key={i} dates={d} format={format} onClick={onClick} width={width} />
