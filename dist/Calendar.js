@@ -219,10 +219,9 @@ var Calendar = function (_React$Component) {
       };
 
       var css = !visible ? 'd-none ' : asDropDown ? ' position-absolute' : ' ';
-      var styles = !asDropDown ? { width: '300px' } : { zIndex: 999, right: '29px', top: '70px', width: '300px'
+      var styles = !asDropDown ? { width: '300px' } : { zIndex: 999, right: '29px', top: '70px', width: '300px' };
 
-        // <DayGrid dow={dow} days={days} onClick={this.handleDateSelected} />
-      };return _react2.default.createElement(
+      return _react2.default.createElement(
         'div',
         { className: 'picker card ' + css, style: styles },
         _react2.default.createElement(

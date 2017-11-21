@@ -204,7 +204,7 @@ export default class Calendar extends React.Component {
     }
   }
 
-  render() {
+  render () {
     const { dow, view, page, days, months, years, selection } = this.state
     const { asDropDown, visible, format, disableTime } = this.props
 
@@ -220,7 +220,6 @@ export default class Calendar extends React.Component {
     const css = !visible ? 'd-none ' : asDropDown ? ' position-absolute' : ' '
     const styles = !asDropDown ? { width: '300px' } : { zIndex: 999, right: '29px', top: '70px', width: '300px' }
 
-    // <DayGrid dow={dow} days={days} onClick={this.handleDateSelected} />
     return (
       <div className={`picker card ${css}`} style={styles}>
         <div className='card-header py-0 px-0 d-flex justify-content-between bg-secondary'>
