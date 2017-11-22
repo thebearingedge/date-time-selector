@@ -56,14 +56,16 @@ export default class DateTimeSelector extends React.Component {
 
   render () {
     const { isValid, isCalendarVisible, moment } = this.state
+    const { value, ...rest } = this.props
 
     return (
       <div className='position-relative'>
         <InputGroup>
           <Input
             className={`${isValid ? '' : 'text-danger'}`}
-            value={this.props.value}
-            onChange={this.handleChange} />
+            value={value}
+            onChange={this.handleChange}
+            {...rest} />
           <InputGroupButton>
             <Button onClick={this.handleToggleCalendar} >
               <i className='fa fa-calendar' />
