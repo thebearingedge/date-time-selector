@@ -39,14 +39,13 @@ export default class DateTimeRangeSelector extends React.Component {
 
   render () {
     return (
-      <div className='container'>
-        <div className='form-group'>
-          <DateTimeSelector value={this.props.from} onChange={this.handleUpdateFrom} />
+      <div className='form-row align-items-center'>
+        <div className='col p-0'>
+          <DateTimeSelector buttonClasses='rounded-0 border-right-0' value={this.props.from} onChange={this.handleUpdateFrom} />
         </div>
-        <div className='form-group'>
-          <DateTimeSelector value={this.props.to} onChange={this.handleUpdateTo} />
+        <div className='col p-0'>
+          <DateTimeSelector inputClasses='rounded-0' value={this.props.to} onChange={this.handleUpdateTo} />
         </div>
-        {this.props.children}
       </div>
     )
   }

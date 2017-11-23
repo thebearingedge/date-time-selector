@@ -14,12 +14,16 @@ export default class DateTimeSelector extends React.Component {
 
   static propTypes = {
     value: PropTypes.string,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    buttonClasses: PropTypes.string,
+    inputClasses: PropTypes.string
   }
 
   static defaultProps = {
     value: '',
-    onChange: null
+    onChange: null,
+    buttonClasses: '',
+    inputClasses: ''
   }
 
   componentWillReceiveProps (nextProps) {
@@ -56,18 +60,20 @@ export default class DateTimeSelector extends React.Component {
 
   render () {
     const { isValid, isCalendarVisible, moment } = this.state
-    const { value, ...rest } = this.props
+    const { buttonClasses, inputClasses, value, ...rest } = this.props
 
     return (
       <div className='position-relative'>
         <InputGroup>
           <Input
-            className={`${isValid ? '' : 'text-danger'}`}
+            className={`form-control ${isValid ? '' : 'text-danger'} ${inputClasses}`}
             value={value}
             onChange={this.handleChange}
             {...rest} />
           <InputGroupButton>
-            <Button onClick={this.handleToggleCalendar} >
+            <Button
+              className={buttonClasses}
+              onClick={this.handleToggleCalendar} >
               <i className='fa fa-calendar' />
             </Button>
           </InputGroupButton>

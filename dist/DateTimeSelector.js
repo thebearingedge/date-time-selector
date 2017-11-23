@@ -92,8 +92,10 @@ var DateTimeSelector = function (_React$Component) {
           moment = _state.moment;
 
       var _props = this.props,
+          buttonClasses = _props.buttonClasses,
+          inputClasses = _props.inputClasses,
           value = _props.value,
-          rest = _objectWithoutProperties(_props, ['value']);
+          rest = _objectWithoutProperties(_props, ['buttonClasses', 'inputClasses', 'value']);
 
       return _react2.default.createElement(
         'div',
@@ -102,7 +104,7 @@ var DateTimeSelector = function (_React$Component) {
           _reactstrap.InputGroup,
           null,
           _react2.default.createElement(_reactstrap.Input, _extends({
-            className: '' + (isValid ? '' : 'text-danger'),
+            className: 'form-control ' + (isValid ? '' : 'text-danger') + ' ' + inputClasses,
             value: value,
             onChange: this.handleChange
           }, rest)),
@@ -111,7 +113,9 @@ var DateTimeSelector = function (_React$Component) {
             null,
             _react2.default.createElement(
               _reactstrap.Button,
-              { onClick: this.handleToggleCalendar },
+              {
+                className: buttonClasses,
+                onClick: this.handleToggleCalendar },
               _react2.default.createElement('i', { className: 'fa fa-calendar' })
             )
           )
@@ -126,10 +130,14 @@ var DateTimeSelector = function (_React$Component) {
 
 DateTimeSelector.propTypes = {
   value: _propTypes2.default.string,
-  onChange: _propTypes2.default.func
+  onChange: _propTypes2.default.func,
+  buttonClasses: _propTypes2.default.string,
+  inputClasses: _propTypes2.default.string
 };
 DateTimeSelector.defaultProps = {
   value: '',
-  onChange: null
+  onChange: null,
+  buttonClasses: '',
+  inputClasses: ''
 };
 exports.default = DateTimeSelector;

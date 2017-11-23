@@ -61,18 +61,17 @@ var DateTimeRangeSelector = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'container' },
+        { className: 'form-row align-items-center' },
         _react2.default.createElement(
           'div',
-          { className: 'form-group' },
-          _react2.default.createElement(_DateTimeSelector2.default, { value: this.props.from, onChange: this.handleUpdateFrom })
+          { className: 'col p-0' },
+          _react2.default.createElement(_DateTimeSelector2.default, { buttonClasses: 'rounded-0 border-right-0', value: this.props.from, onChange: this.handleUpdateFrom })
         ),
         _react2.default.createElement(
           'div',
-          { className: 'form-group' },
-          _react2.default.createElement(_DateTimeSelector2.default, { value: this.props.to, onChange: this.handleUpdateTo })
-        ),
-        this.props.children
+          { className: 'col p-0' },
+          _react2.default.createElement(_DateTimeSelector2.default, { inputClasses: 'rounded-0', value: this.props.to, onChange: this.handleUpdateTo })
+        )
       );
     }
   }]);
