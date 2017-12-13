@@ -69,17 +69,15 @@ var DateTimeSelector = function (_React$Component) {
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
+  // componentDidMount () {
+  //   document.body.addEventListener('click', this.hideCalendar)
+  // }
+  //
+  // componentWillUnmount () {
+  //   document.body.removeEventListener('click', this.hideCalendar)
+  // }
+
   _createClass(DateTimeSelector, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      document.body.addEventListener('click', this.hideCalendar);
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      document.body.removeEventListener('click', this.hideCalendar);
-    }
-  }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       if (nextProps.value !== this.props.value) {
@@ -152,6 +150,5 @@ DateTimeSelector.defaultProps = {
   value: '',
   onChange: null,
   buttonClasses: '',
-  inputClasses: ''
-};
+  inputClasses: '' };
 exports.default = DateTimeSelector;
