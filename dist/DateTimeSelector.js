@@ -52,6 +52,10 @@ var DateTimeSelector = function (_React$Component) {
       moment: null,
       isValidDate: true,
       isCalendarVisible: false
+    }, _this.hideCalendar = function () {
+      if (_this.state.isCalendarVisible) {
+        _this.setState({ isCalendarVisible: false });
+      }
     }, _this.handleChange = function (e) {
       _this.update(e.target.value);
     }, _this.handleToggleCalendar = function () {
@@ -66,6 +70,16 @@ var DateTimeSelector = function (_React$Component) {
   }
 
   _createClass(DateTimeSelector, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      document.body.addEventListener('click', this.hideCalendar);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      document.body.removeEventListener('click', this.hideCalendar);
+    }
+  }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       if (nextProps.value !== this.props.value) {

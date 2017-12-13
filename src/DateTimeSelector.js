@@ -26,6 +26,20 @@ export default class DateTimeSelector extends React.Component {
     inputClasses: ''
   }
 
+  componentDidMount () {
+    document.body.addEventListener('click', this.hideCalendar);
+  }
+
+  componentWillUnmount () {
+    document.body.removeEventListener('click', this.hideCalendar);
+  }
+
+  hideCalendar = () => {
+    if (this.state.isCalendarVisible) {
+      this.setState({ isCalendarVisible: false })
+    }
+  }
+
   componentWillReceiveProps (nextProps) {
     if (nextProps.value !== this.props.value) {
       this.update(nextProps.value)
