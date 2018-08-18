@@ -7,38 +7,41 @@
   "author": "unifymonitor",
   "license": "MIT",
   "scripts": {
-    "build": "babel src --out-dir dist --ignore test.js",
-    "lint": "eslint src",
-    "test": "npm run lint && npm run build && jest --env=jsdom",
-    "clean": "rm -rf node_modules"
+    "build": "babel src/ -d dist/",
+    "lint": "eslint --fix src/",
+    "test": "npm run lint && npm run build",
+    "clean": "rimraf dist/"
   },
   "dependencies": {
-    "date-time-parser": "1.0.3",
-    "moment": "^2.19.1",
-    "prop-types": "15.5.8",
-    "react": "^16.1.1",
-    "react-dom": "^16.1.1",
-    "react-transition-group": "^2.2.1",
-    "reactstrap": "next"
+    "date-time-parser": "^1.0.3",
+    "prop-types": "^15.6.2"
+  },
+  "peerDependencies": {
+    "reactstrap": "^6.4.0",
+    "react-transition-group": "^2.4.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
   },
   "devDependencies": {
-    "babel-cli": "6.16.0",
-    "babel-core": "6.16.0",
-    "babel-eslint": "7.0.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "6.16.0",
-    "babel-preset-stage-2": "6.16.0",
-    "babel-register": "6.16.3",
-    "enzyme": "2.8.2",
-    "eslint": "3.6.1",
-    "eslint-config-standard": "6.2.0",
-    "eslint-config-standard-jsx": "3.2.0",
-    "eslint-config-standard-react": "4.2.0",
-    "eslint-plugin-promise": "2.0.1",
-    "eslint-plugin-react": "6.3.0",
-    "eslint-plugin-standard": "2.0.1",
-    "jest": "16.0.2",
-    "react-test-renderer": "15.5.4"
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.6",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "eslint": "^5.4.0",
+    "eslint-config-standard": "^12.0.0-alpha.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-standard": "^3.1.0",
+    "moment": "^2.22.2",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "reactstrap": "^6.4.0",
+    "rimraf": "^2.6.2"
   },
   "babel": {
     "presets": [
@@ -49,9 +52,14 @@
   },
   "eslintConfig": {
     "extends": [
-      "eslint-config-standard",
-      "eslint-config-standard-react"
+      "standard",
+      "plugin:react/recommended"
     ],
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "settings": {
+      "react": {
+        "version": "^16.4.2"
+      }
+    }
   }
 }

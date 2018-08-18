@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import DropDownSelect from './DropDownSelect'
 
 export default class RefreshRateDropDown extends React.Component {
-
   state = {
     options: [
       { value: 0, caption: 'Off', selected: !false, color: 'warning' },

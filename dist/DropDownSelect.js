@@ -94,7 +94,6 @@ var DropDownSelect = function (_React$Component) {
 
 DropDownSelect.propTypes = {
   right: _propTypes2.default.bool,
-  icon: _propTypes2.default.string,
   onChange: _propTypes2.default.func,
   options: _propTypes2.default.array
 };

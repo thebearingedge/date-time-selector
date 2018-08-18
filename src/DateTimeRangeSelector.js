@@ -3,14 +3,12 @@ import PropTypes from 'prop-types'
 import DateTimeSelector from './DateTimeSelector'
 
 export default class DateTimeRangeSelector extends React.Component {
-
   state = {
     isValidDate: true,
     isCalendarVisible: false
   }
 
   static propTypes = {
-    children: PropTypes.node,
     from: PropTypes.string,
     to: PropTypes.string,
     onUpdated: PropTypes.func

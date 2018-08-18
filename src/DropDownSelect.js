@@ -3,14 +3,12 @@ import PropTypes from 'prop-types'
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
 export default class DropDownSelect extends React.Component {
-
   state = {
     dropdownOpen: false
   }
 
   static propTypes = {
     right: PropTypes.bool,
-    icon: PropTypes.string,
     onChange: PropTypes.func,
     options: PropTypes.array
   }

@@ -22,6 +22,8 @@ var _moment2 = _interopRequireDefault(_moment);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -162,8 +164,10 @@ var Calendar = function (_React$Component) {
   }
 
   _createClass(Calendar, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
+    key: 'UNSAFE_componentWillMount',
+
+    // eslint-disable-next-line camelcase
+    value: function UNSAFE_componentWillMount() {
       var _this2 = this;
 
       this.setState({ selection: this.props.value }, function () {
@@ -172,9 +176,11 @@ var Calendar = function (_React$Component) {
         }
       });
     }
+    // eslint-disable-next-line camelcase
+
   }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
+    key: 'UNSAFE_componentWillReceiveProps',
+    value: function UNSAFE_componentWillReceiveProps(nextProps) {
       var _this3 = this;
 
       if (nextProps.value !== this.state.selection) {
@@ -292,7 +298,7 @@ var Calendar = function (_React$Component) {
             _react2.default.createElement(
               'button',
               { onClick: this.handleClickClear, type: 'button', className: 'btn btn-sm btn-light', disabled: timeDisable },
-              _react2.default.createElement('i', { className: 'fa fa-trash-o text-primary' })
+              _react2.default.createElement('i', { className: 'fa fa-trash-alt text-secondary' })
             ),
             _react2.default.createElement(
               'button',
@@ -315,7 +321,7 @@ var Calendar = function (_React$Component) {
 
 Calendar.propTypes = {
   visible: _propTypes2.default.bool,
-  value: _propTypes2.default.object, // a moment
+  value: _propTypes2.default.object,
   disableTime: _propTypes2.default.bool,
   format: _propTypes2.default.string,
   onSubmit: _propTypes2.default.func,
@@ -327,8 +333,7 @@ Calendar.defaultProps = {
   disableTime: false,
   format: 'L HH:mm:ss',
   onSubmit: null,
-  asDropDown: false
-};
+  asDropDown: false };
 exports.default = Calendar;
 
 
@@ -345,6 +350,12 @@ var HeadButton = function HeadButton(_ref2) {
   );
 };
 
+HeadButton.propTypes = {
+  onClick: _propTypes2.default.func,
+  icon: _propTypes2.default.string,
+  text: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number])
+};
+
 var TimeInput = function TimeInput(props) {
   return _react2.default.createElement('input', _extends({ type: 'text', className: 'form-control form-control-sm w-25',
     onFocus: function onFocus(e) {
@@ -355,9 +366,7 @@ var TimeInput = function TimeInput(props) {
 
 var DowHeader = function DowHeader(_ref3) {
   var _ref3$dow = _ref3.dow,
-      dow = _ref3$dow === undefined ? [] : _ref3$dow,
-      days = _ref3.days,
-      onClick = _ref3.onClick;
+      dow = _ref3$dow === undefined ? [] : _ref3$dow;
   return _react2.default.createElement(
     Row,
     null,
@@ -379,34 +388,45 @@ var DowHeader = function DowHeader(_ref3) {
   );
 };
 
+DowHeader.propTypes = {
+  dow: _propTypes2.default.arrayOf(_propTypes2.default.string)
+};
+
 var Grid = function Grid(_ref4) {
   var data = _ref4.data,
-      format = _ref4.format,
-      onClick = _ref4.onClick,
-      width = _ref4.width,
-      children = _ref4.children;
+      children = _ref4.children,
+      props = _objectWithoutProperties(_ref4, ['data', 'children']);
+
   return _react2.default.createElement(
     'div',
     { className: 'card-body pt-1 pl-2 pr-2 pb-1' },
     children,
     data.map(function (d, i) {
-      return _react2.default.createElement(GridRow, { key: i, dates: d, format: format, onClick: onClick, width: width });
+      return _react2.default.createElement(GridRow, _extends({ key: i, dates: d }, props));
     })
   );
 };
 
+Grid.propTypes = {
+  data: _propTypes2.default.arrayOf(_propTypes2.default.arrayOf(_propTypes2.default.object)),
+  children: _propTypes2.default.oneOfType([_propTypes2.default.arrayOf(_propTypes2.default.node), _propTypes2.default.node])
+};
+
 var GridRow = function GridRow(_ref5) {
   var dates = _ref5.dates,
-      format = _ref5.format,
-      width = _ref5.width,
-      onClick = _ref5.onClick;
+      props = _objectWithoutProperties(_ref5, ['dates']);
+
   return _react2.default.createElement(
     Row,
     null,
     dates.map(function (d, i) {
-      return _react2.default.createElement(GridButton, { key: d.m.unix(), date: d, format: format, onClick: onClick, width: width });
+      return _react2.default.createElement(GridButton, _extends({ key: d.m.unix(), date: d }, props));
     })
   );
+};
+
+GridRow.propTypes = {
+  dates: _propTypes2.default.arrayOf(_propTypes2.default.object)
 };
 
 var GridButton = function GridButton(_ref6) {
@@ -441,6 +461,14 @@ var GridButton = function GridButton(_ref6) {
   );
 };
 
+GridButton.propTypes = {
+  disabled: _propTypes2.default.bool,
+  onClick: _propTypes2.default.func,
+  width: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]),
+  format: _propTypes2.default.string,
+  date: _propTypes2.default.object
+};
+
 var Row = function Row(_ref7) {
   var children = _ref7.children;
   return _react2.default.createElement(
@@ -450,6 +478,10 @@ var Row = function Row(_ref7) {
   );
 };
 
+Row.propTypes = {
+  children: _propTypes2.default.arrayOf(_propTypes2.default.node)
+};
+
 var ButtonGroup = function ButtonGroup(_ref8) {
   var children = _ref8.children;
   return _react2.default.createElement(
@@ -457,4 +489,8 @@ var ButtonGroup = function ButtonGroup(_ref8) {
     { className: 'btn-group', role: 'group' },
     children
   );
+};
+
+ButtonGroup.propTypes = {
+  children: _propTypes2.default.oneOfType([_propTypes2.default.arrayOf(_propTypes2.default.node), _propTypes2.default.node])
 };

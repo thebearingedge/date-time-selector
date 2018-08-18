@@ -80,7 +80,6 @@ var DateTimeRangeSelector = function (_React$Component) {
 }(_react2.default.Component);
 
 DateTimeRangeSelector.propTypes = {
-  children: _propTypes2.default.node,
   from: _propTypes2.default.string,
   to: _propTypes2.default.string,
   onUpdated: _propTypes2.default.func

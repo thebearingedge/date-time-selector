@@ -69,17 +69,12 @@ var DateTimeSelector = function (_React$Component) {
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
-  // componentDidMount () {
-  //   document.body.addEventListener('click', this.hideCalendar)
-  // }
-  //
-  // componentWillUnmount () {
-  //   document.body.removeEventListener('click', this.hideCalendar)
-  // }
-
   _createClass(DateTimeSelector, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
+    key: 'UNSAFE_componentWillReceiveProps',
+
+
+    // eslint-disable-next-line camelcase
+    value: function UNSAFE_componentWillReceiveProps(nextProps) {
       if (nextProps.value !== this.props.value) {
         this.update(nextProps.value);
       }
@@ -99,15 +94,16 @@ var DateTimeSelector = function (_React$Component) {
     key: 'render',
     value: function render() {
       var _state = this.state,
-          isValid = _state.isValid,
           isCalendarVisible = _state.isCalendarVisible,
           moment = _state.moment;
 
       var _props = this.props,
           buttonClasses = _props.buttonClasses,
           inputClasses = _props.inputClasses,
+          disableTime = _props.disableTime,
+          error = _props.error,
           value = _props.value,
-          rest = _objectWithoutProperties(_props, ['buttonClasses', 'inputClasses', 'value']);
+          props = _objectWithoutProperties(_props, ['buttonClasses', 'inputClasses', 'disableTime', 'error', 'value']);
 
       return _react2.default.createElement(
         'div',
@@ -116,13 +112,18 @@ var DateTimeSelector = function (_React$Component) {
           _reactstrap.InputGroup,
           null,
           _react2.default.createElement(_reactstrap.Input, _extends({
-            className: 'form-control ' + (isValid ? '' : 'text-danger') + ' ' + inputClasses,
             value: value,
+            invalid: !!error,
             onChange: this.handleChange
-          }, rest)),
+          }, props)),
+          error && _react2.default.createElement(
+            _reactstrap.FormFeedback,
+            { tooltip: true },
+            error
+          ),
           _react2.default.createElement(
-            _reactstrap.InputGroupButton,
-            null,
+            _reactstrap.InputGroupAddon,
+            { addonType: 'append' },
             _react2.default.createElement(
               _reactstrap.Button,
               {
@@ -132,7 +133,12 @@ var DateTimeSelector = function (_React$Component) {
             )
           )
         ),
-        _react2.default.createElement(_Calendar2.default, { asDropDown: true, visible: isCalendarVisible, value: moment, onSubmit: this.handleCalendarSelection })
+        _react2.default.createElement(_Calendar2.default, {
+          asDropDown: true,
+          value: moment,
+          visible: isCalendarVisible,
+          disableTime: disableTime,
+          onSubmit: this.handleCalendarSelection })
       );
     }
   }]);
@@ -150,5 +156,6 @@ DateTimeSelector.defaultProps = {
   value: '',
   onChange: null,
   buttonClasses: '',
-  inputClasses: '' };
+  inputClasses: ''
+};
 exports.default = DateTimeSelector;

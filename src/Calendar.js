@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 
 export default class Calendar extends React.Component {
-
   state = {
     days: [],
     months: [],
@@ -15,7 +14,7 @@ export default class Calendar extends React.Component {
 
   static propTypes = {
     visible: PropTypes.bool,
-    value: PropTypes.object, // a moment
+    value: PropTypes.object,
     disableTime: PropTypes.bool,
     format: PropTypes.string,
     onSubmit: PropTypes.func,
@@ -30,16 +29,16 @@ export default class Calendar extends React.Component {
     onSubmit: null,
     asDropDown: false
   }
-
-  componentWillMount() {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillMount () {
     this.setState({ selection: this.props.value }, () => {
       if (this.props.visible) {
         this.updatePage(this.state.selection ? this.state.selection : this.state.page, this.state.selection, 'D')
       }
     })
   }
-
-  componentWillReceiveProps(nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps.value !== this.state.selection) {
       this.setState({ selection: nextProps.value, page: nextProps.value === null ? moment() : nextProps.value }, () => {
         this.updatePage(this.state.selection ? this.state.selection : this.state.page, this.state.selection, 'D')
@@ -251,7 +250,7 @@ export default class Calendar extends React.Component {
         <div className='card-footer py-0 pr-0 d-flex justify-content-between align-items-center bg-light'>
           <p className='mb-0'><small><b>{formattedDate}</b></small></p>
           <ButtonGroup>
-            <button onClick={this.handleClickClear} type='button' className='btn btn-sm btn-light' disabled={timeDisable}><i className='fa fa-trash-o text-primary' /></button>
+            <button onClick={this.handleClickClear} type='button' className='btn btn-sm btn-light' disabled={timeDisable}><i className='fa fa-trash-alt text-secondary' /></button>
             <button onClick={this.handleClickNow} type='button' className='btn btn-sm btn-light'><i className='fa fa-circle text-primary' /></button>
             <button onClick={this.handleSubmit} type='button' className='btn btn-sm btn-light'><i className='fa fa-check text-success' /></button>
           </ButtonGroup>
@@ -264,32 +263,54 @@ export default class Calendar extends React.Component {
 const HeadButton = ({ onClick, icon, text }) =>
   <button type='button' className='btn btn-sm btn-secondary' onClick={onClick}><i className={`fa fa-${icon}`} /> {text}</button>
 
+HeadButton.propTypes = {
+  onClick: PropTypes.func,
+  icon: PropTypes.string,
+  text: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+}
+
 const TimeInput = (props) =>
   <input type='text' className='form-control form-control-sm w-25'
     onFocus={(e) => e.target.select()}
     {...props} />
 
-const DowHeader = ({ dow = [], days, onClick }) =>
+const DowHeader = ({ dow = [] }) =>
   <Row>
     {dow.map((d, i) => {
       return <div key={d} className='px-0 py-0 m-0 text-center' style={{ width: '13%' }}><small><strong>{d}</strong></small></div>
     })}
   </Row>
 
-const Grid = ({ data, format, onClick, width, children }) =>
+DowHeader.propTypes = {
+  dow: PropTypes.arrayOf(PropTypes.string)
+}
+
+const Grid = ({ data, children, ...props }) =>
   <div className='card-body pt-1 pl-2 pr-2 pb-1'>
     {children}
     {data.map((d, i) => {
-      return <GridRow key={i} dates={d} format={format} onClick={onClick} width={width} />
+      return <GridRow key={i} dates={d} {...props} />
     })}
   </div>
 
-const GridRow = ({ dates, format, width, onClick }) =>
+Grid.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object)),
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ])
+}
+
+const GridRow = ({ dates, ...props }) =>
   <Row>
     {dates.map(function (d, i) {
-      return <GridButton key={d.m.unix()} date={d} format={format} onClick={onClick} width={width} />
+      return <GridButton key={d.m.unix()} date={d} {...props} />
     })}
   </Row>
+
+GridRow.propTypes = {
+  dates: PropTypes.arrayOf(PropTypes.object)
+}
 
 const GridButton = ({ date, format, disabled, onClick, width }) => {
   let c = 'py-1 px-0 btn btn-sm text-center '
@@ -313,8 +334,31 @@ const GridButton = ({ date, format, disabled, onClick, width }) => {
   )
 }
 
+GridButton.propTypes = {
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  format: PropTypes.string,
+  date: PropTypes.object
+}
+
 const Row = ({ children }) =>
-  <div className='mb-1 d-flex flex-nowrap justify-content-between align-items-center'>{children}</div>
+  <div className='mb-1 d-flex flex-nowrap justify-content-between align-items-center'>
+    {children}
+  </div>
+
+Row.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.node)
+}
 
 const ButtonGroup = ({ children }) =>
-  <div className='btn-group' role='group'>{children}</div>
+  <div className='btn-group' role='group'>
+    {children}
+  </div>
+
+ButtonGroup.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ])
+}

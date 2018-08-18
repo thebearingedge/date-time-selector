@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
 export default class CommonRangesDropDown extends React.Component {
-
   state = {
     dropdownOpen: false,
     options: [

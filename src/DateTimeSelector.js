@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Calendar from './Calendar'
-import { Button, InputGroup, InputGroupButton, Input } from 'reactstrap'
+import { Button, InputGroup, InputGroupAddon, FormFeedback, Input } from 'reactstrap'
 import { parseDateTime } from 'date-time-parser'
 
 export default class DateTimeSelector extends React.Component {
-
   state = {
     moment: null,
     isValidDate: true,
@@ -26,21 +25,14 @@ export default class DateTimeSelector extends React.Component {
     inputClasses: ''
   }
 
-  // componentDidMount () {
-  //   document.body.addEventListener('click', this.hideCalendar)
-  // }
-  //
-  // componentWillUnmount () {
-  //   document.body.removeEventListener('click', this.hideCalendar)
-  // }
-
   hideCalendar = () => {
     if (this.state.isCalendarVisible) {
       this.setState({ isCalendarVisible: false })
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps.value !== this.props.value) {
       this.update(nextProps.value)
     }
@@ -73,26 +65,32 @@ export default class DateTimeSelector extends React.Component {
   }
 
   render () {
-    const { isValid, isCalendarVisible, moment } = this.state
-    const { buttonClasses, inputClasses, value, ...rest } = this.props
+    const { isCalendarVisible, moment } = this.state
+    const { buttonClasses, inputClasses, disableTime, error, value, ...props } = this.props
 
     return (
       <div className='position-relative'>
         <InputGroup>
           <Input
-            className={`form-control ${isValid ? '' : 'text-danger'} ${inputClasses}`}
             value={value}
+            invalid={!!error}
             onChange={this.handleChange}
-            {...rest} />
-          <InputGroupButton>
+            {...props} />
+          {error && <FormFeedback tooltip>{error}</FormFeedback>}
+          <InputGroupAddon addonType="append">
             <Button
               className={buttonClasses}
               onClick={this.handleToggleCalendar} >
               <i className='fa fa-calendar' />
             </Button>
-          </InputGroupButton>
+          </InputGroupAddon>
         </InputGroup>
-        <Calendar asDropDown visible={isCalendarVisible} value={moment} onSubmit={this.handleCalendarSelection} />
+        <Calendar
+          asDropDown
+          value={moment}
+          visible={isCalendarVisible}
+          disableTime={disableTime}
+          onSubmit={this.handleCalendarSelection} />
       </div>
     )
   }
